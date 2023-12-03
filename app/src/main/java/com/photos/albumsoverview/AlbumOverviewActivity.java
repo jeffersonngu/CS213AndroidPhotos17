@@ -1,22 +1,23 @@
-package com.photos;
+package com.photos.albumsoverview;
+
+import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-
-import com.photos.albumsoverview.AlbumListAdapter;
+import com.photos.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Photos extends AppCompatActivity {
+public class AlbumOverviewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.photos_main);
+        setContentView(R.layout.activity_album_overview);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
@@ -28,5 +29,12 @@ public class Photos extends AppCompatActivity {
 
         AlbumListAdapter adapter = new AlbumListAdapter(albumList);
         recyclerView.setAdapter(adapter);
+
+        Button addAlbumButton = findViewById(R.id.button);
+        addAlbumButton.setOnClickListener(l -> addAlbumDialog());
+    }
+
+    private void addAlbumDialog() {
+
     }
 }

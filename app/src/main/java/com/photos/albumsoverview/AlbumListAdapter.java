@@ -34,6 +34,16 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
         holder.textView.setText("Meep");
 
         holder.imageView.setImageResource(R.drawable.no_image_icon);
+        holder.imageView.setAdjustViewBounds(true);
+        holder.imageView.setMaxWidth(200);
+        holder.imageView.setMaxHeight(200);
+
+        ViewGroup.LayoutParams layoutParams = holder.imageView.getLayoutParams();
+        layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        holder.imageView.setLayoutParams(layoutParams);
+
+        holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 
     @Override
