@@ -1,5 +1,8 @@
 <resources>
-    <style name="Base.Theme.Photos" parent="Theme.Material3.DayNight.NoActionBar" />
+    <style name="Base.Theme.Photos" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Any default styles here -->
+    </style>
+
     <style name="Theme.Photos" parent="@style/Base.Theme.Photos" />
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">

@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.photos"
-        minSdk = 29
+        minSdk = 31
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -36,6 +36,7 @@ dependencies {
     implementation("androidx.activity:activity:1.8.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.core:core-splashscreen:1.0.1")
     // implementation("androidx.navigation:navigation-fragment:2.5.3")
     // implementation("androidx.navigation:navigation-ui:2.5.3")

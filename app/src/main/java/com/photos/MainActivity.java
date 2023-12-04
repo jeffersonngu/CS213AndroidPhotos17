@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = new ViewModelProvider(this).get(MainActivity.MainViewModel.class);
+        // viewModel = new ViewModelProvider(this).get(MainActivity.MainViewModel.class);
 
-        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
-        splashScreen.setKeepOnScreenCondition(() -> Boolean.FALSE.equals(viewModel.getIsReady().getValue()));
+        // SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
+        // splashScreen.setKeepOnScreenCondition(() -> Boolean.FALSE.equals(viewModel.getIsReady().getValue()));
 
         // setContentView(R.layout.activity_welcome);
 
