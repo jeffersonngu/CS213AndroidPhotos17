@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.photos.Photos;
 import com.photos.R;
 
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ import java.util.List;
 
 public class AlbumOverviewActivity extends AppCompatActivity {
 
-    private List<AlbumModel> albumList;
     private AlbumListAdapter adapter;
 
     @Override
@@ -27,14 +27,13 @@ public class AlbumOverviewActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        albumList = new ArrayList<>();
-        albumList.add(new AlbumModel("Meep")); // Test
+        Photos.getAlbumList().add(new AlbumModel("Meep")); // Test
         // albumList.add(new AlbumModel("Moop")); // Test
 
         LinearLayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new AlbumListAdapter(albumList);
+        adapter = new AlbumListAdapter();
         recyclerView.setAdapter(adapter);
 
         Button addAlbumButton = findViewById(R.id.button);
@@ -48,8 +47,8 @@ public class AlbumOverviewActivity extends AppCompatActivity {
                 .setView(editText)
                 .setPositiveButton("Submit", (dialogInterface, i) -> {
                     String input = editText.getText().toString();
-                    albumList.add(new AlbumModel(input));
-                    adapter.notifyItemInserted(albumList.size() - 1);
+                    Photos.getAlbumList().add(new AlbumModel(input));
+                    adapter.notifyItemInserted(Photos.getAlbumList().size() - 1);
                 })
                 .setNegativeButton("Cancel", null)
                 .create();

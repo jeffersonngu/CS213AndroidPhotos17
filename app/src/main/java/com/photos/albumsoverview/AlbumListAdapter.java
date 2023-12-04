@@ -1,6 +1,5 @@
 package com.photos.albumsoverview;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.photos.Photos;
 import com.photos.R;
 
-import java.util.List;
-
 public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.ViewHolder> {
-
-    private final List<AlbumModel> albumList;
-
-    public AlbumListAdapter(List<AlbumModel> albumList) {
-        this.albumList = albumList;
-    }
 
     @NonNull
     @Override
@@ -30,7 +22,7 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        AlbumModel currentAlbum = albumList.get(position);
+        AlbumModel currentAlbum = Photos.getAlbumList().get(position);
 
         holder.title.setText(currentAlbum.getName());
         holder.photoCount.setText(String.valueOf(currentAlbum.getPhotoList().size()));
@@ -50,7 +42,7 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
 
     @Override
     public int getItemCount() {
-        return albumList.size();
+        return Photos.getAlbumList().size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
