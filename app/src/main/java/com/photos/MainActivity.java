@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         public MainViewModel() {
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.schedule(() -> isReady.postValue(true), 5000L, TimeUnit.MILLISECONDS);
+            executorService.schedule(() -> isReady.postValue(true), 3000L, TimeUnit.MILLISECONDS);
         }
 
         public MutableLiveData<Boolean> getIsReady() {

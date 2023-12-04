@@ -1,5 +1,6 @@
 package com.photos.albumsoverview;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,35 +16,36 @@ import java.util.List;
 
 public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.ViewHolder> {
 
-    private final List<String> albumList;
+    private final List<AlbumModel> albumList;
 
-    public AlbumListAdapter(List<String> albumList) {
+    public AlbumListAdapter(List<AlbumModel> albumList) {
         this.albumList = albumList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.album_layout, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_album, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String currentAlbum = albumList.get(position);
+        AlbumModel currentAlbum = albumList.get(position);
 
-        holder.textView.setText("Meep");
+        holder.title.setText(currentAlbum.getName());
+        holder.photoCount.setText(String.valueOf(currentAlbum.getPhotoList().size()));
 
-        holder.imageView.setImageResource(R.drawable.no_image_icon);
-        holder.imageView.setAdjustViewBounds(true);
-        holder.imageView.setMaxWidth(200);
-        holder.imageView.setMaxHeight(200);
-
-        ViewGroup.LayoutParams layoutParams = holder.imageView.getLayoutParams();
-        layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        holder.imageView.setLayoutParams(layoutParams);
-
-        holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        // holder.imageView.setImageResource(R.drawable.no_image_icon);
+        // holder.imageView.setAdjustViewBounds(true);
+        // holder.imageView.setMaxWidth(200);
+        // holder.imageView.setMaxHeight(200);
+        //
+        // ViewGroup.LayoutParams layoutParams = holder.imageView.getLayoutParams();
+        // layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        // layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        // holder.imageView.setLayoutParams(layoutParams);
+        //
+        // holder.thumbnail.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 
     @Override
@@ -52,14 +54,16 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
-        ImageView imageView;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
+        private final ImageView thumbnail;
+        private final TextView title;
+        private final TextView photoCount;
 
-            textView = itemView.findViewById(R.id.textView);
-            imageView = itemView.findViewById(R.id.imageView);
+        public ViewHolder(@NonNull View view) {
+            super(view);
+            title = view.findViewById(R.id.album_name_txt);
+            thumbnail = view.findViewById(R.id.album_thumbnail_img);
+            photoCount = view.findViewById(R.id.album_photoCount_txt);
         }
     }
 }

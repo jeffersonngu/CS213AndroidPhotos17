@@ -17,4 +17,11 @@ public class AlbumModel extends ViewModel {
         this.name.setValue(name);
     }
 
+    public String getName() {
+        return name.getValue();
+    }
+
+    public List<PhotoModel> getPhotoList() {
+        return photoList.getValue();
+    }
 }

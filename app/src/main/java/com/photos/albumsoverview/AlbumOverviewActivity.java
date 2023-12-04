@@ -2,8 +2,11 @@ package com.photos.albumsoverview;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +17,9 @@ import java.util.List;
 
 public class AlbumOverviewActivity extends AppCompatActivity {
 
+    private List<AlbumModel> albumList;
+    private AlbumListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,13 +27,14 @@ public class AlbumOverviewActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        List<String> albumList = new ArrayList<>();
-        albumList.add("Meep");
+        albumList = new ArrayList<>();
+        albumList.add(new AlbumModel("Meep")); // Test
+        // albumList.add(new AlbumModel("Moop")); // Test
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        AlbumListAdapter adapter = new AlbumListAdapter(albumList);
+        adapter = new AlbumListAdapter(albumList);
         recyclerView.setAdapter(adapter);
 
         Button addAlbumButton = findViewById(R.id.button);
@@ -35,6 +42,17 @@ public class AlbumOverviewActivity extends AppCompatActivity {
     }
 
     private void addAlbumDialog() {
-
+        EditText editText = new EditText(this);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Add Album:")
+                .setView(editText)
+                .setPositiveButton("Submit", (dialogInterface, i) -> {
+                    String input = editText.getText().toString();
+                    albumList.add(new AlbumModel(input));
+                    adapter.notifyItemInserted(albumList.size() - 1);
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
     }
 }
