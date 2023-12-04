@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rv_albumoverview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,13 +18,13 @@
         android:verticalSpacing="8dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
-        tools:listitem="@layout/layout_album" />
+        tools:listitem="@layout/item_album" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_albumoverview_add"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:text="@string/add"
+        android:text="@string/common_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

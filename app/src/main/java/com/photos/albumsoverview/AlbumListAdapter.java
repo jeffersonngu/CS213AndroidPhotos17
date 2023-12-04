@@ -17,7 +17,7 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_album, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_album, parent, false));
     }
 
     @Override
@@ -53,9 +53,9 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
 
         public ViewHolder(@NonNull View view) {
             super(view);
-            title = view.findViewById(R.id.album_name_txt);
-            thumbnail = view.findViewById(R.id.album_thumbnail_img);
-            photoCount = view.findViewById(R.id.album_photoCount_txt);
+            title = view.findViewById(R.id.tv_album_name);
+            thumbnail = view.findViewById(R.id.iv_album_thumbnail);
+            photoCount = view.findViewById(R.id.tv_album_photocount);
         }
     }
 }

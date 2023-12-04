@@ -5,7 +5,7 @@
     android:layout_height="200dp">
 
     <ImageView
-        android:id="@+id/album_thumbnail_img"
+        android:id="@+id/iv_album_thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="150dp"
@@ -13,21 +13,21 @@
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:src="@drawable/no_image_icon"
-        android:contentDescription="Image" />
+        android:contentDescription="@string/albumoverview_contentdescription" />
 
     <TextView
-        android:id="@+id/album_name_txt"
+        android:id="@+id/tv_album_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:ellipsize="end"
-        android:text="Placeholder Text" />
+        android:text="@string/albumoverview_placeholder" />
 
     <TextView
-        android:id="@+id/album_photoCount_txt"
+        android:id="@+id/tv_album_photocount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:ellipsize="end"
-        android:text="0" />
+        android:text="@string/common_0" />
 </LinearLayout>

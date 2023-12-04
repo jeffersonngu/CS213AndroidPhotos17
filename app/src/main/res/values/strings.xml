@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Photos</string>
-    <string name="add">+</string>
+    <string name="common_add">+</string>
+    <string name="common_0">0</string>
+    <string name="albumoverview_contentdescription">Image</string>
+    <string name="albumoverview_placeholder">Placeholder Text</string>
 </resources>

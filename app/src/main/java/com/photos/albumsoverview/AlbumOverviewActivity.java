@@ -13,9 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.photos.Photos;
 import com.photos.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AlbumOverviewActivity extends AppCompatActivity {
 
     private AlbumListAdapter adapter;
@@ -23,9 +20,9 @@ public class AlbumOverviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_album_overview);
+        setContentView(R.layout.activity_albumoverview);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.rv_albumoverview);
 
         Photos.getAlbumList().add(new AlbumModel("Meep")); // Test
         // albumList.add(new AlbumModel("Moop")); // Test
@@ -36,7 +33,7 @@ public class AlbumOverviewActivity extends AppCompatActivity {
         adapter = new AlbumListAdapter();
         recyclerView.setAdapter(adapter);
 
-        Button addAlbumButton = findViewById(R.id.button);
+        Button addAlbumButton = findViewById(R.id.btn_albumoverview_add);
         addAlbumButton.setOnClickListener(l -> addAlbumDialog());
     }
 

@@ -10,15 +10,20 @@ import java.util.List;
 
 public class AlbumModel extends ViewModel {
 
-    private MutableLiveData<List<PhotoModel>> photoList = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<List<PhotoModel>> photoList = new MutableLiveData<>(new ArrayList<>());
 
-    private MutableLiveData<String> name = new MutableLiveData<>("No Name Found");
+    private final MutableLiveData<String> name = new MutableLiveData<>("No Name Found");
+
     public AlbumModel(String name) {
         this.name.setValue(name);
     }
 
     public String getName() {
         return name.getValue();
+    }
+
+    public void rename(String newName) {
+        name.setValue(newName);
     }
 
     public List<PhotoModel> getPhotoList() {
