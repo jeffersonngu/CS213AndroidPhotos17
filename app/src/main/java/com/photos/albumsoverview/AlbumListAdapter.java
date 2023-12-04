@@ -22,7 +22,7 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        AlbumModel currentAlbum = Photos.getAlbumList().get(position);
+        Album currentAlbum = Photos.getAlbumList().get(position);
 
         holder.title.setText(currentAlbum.getName());
         holder.photoCount.setText(String.valueOf(currentAlbum.getPhotoList().size()));

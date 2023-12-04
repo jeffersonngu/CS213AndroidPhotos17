@@ -24,8 +24,8 @@ public class AlbumOverviewActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.rv_albumoverview);
 
-        Photos.getAlbumList().add(new AlbumModel("Meep")); // Test
-        Photos.getAlbumList().add(new AlbumModel("Moop")); // Test
+        Photos.getAlbumList().add(new Album("Meep")); // Test
+        Photos.getAlbumList().add(new Album("Moop")); // Test
 
         LinearLayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
@@ -45,7 +45,7 @@ public class AlbumOverviewActivity extends AppCompatActivity {
                 .setView(editText)
                 .setPositiveButton("Submit", (dialogInterface, which) -> {
                     String input = editText.getText().toString();
-                    Photos.getAlbumList().add(new AlbumModel(input));
+                    Photos.getAlbumList().add(new Album(input));
                     adapter.notifyItemInserted(Photos.getAlbumList().size() - 1);
                 })
                 .setNegativeButton("Cancel", null)

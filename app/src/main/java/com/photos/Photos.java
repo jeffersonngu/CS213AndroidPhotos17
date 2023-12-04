@@ -2,14 +2,14 @@ package com.photos;
 
 import android.app.Application;
 
-import com.photos.albumsoverview.AlbumModel;
+import com.photos.albumsoverview.Album;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Photos extends Application {
 
-    private static List<AlbumModel> albumList;
+    private static List<Album> albumList;
 
     @Override
     public void onCreate() {
@@ -17,7 +17,7 @@ public class Photos extends Application {
         albumList = new ArrayList<>();
     }
 
-    public static List<AlbumModel> getAlbumList() {
+    public static List<Album> getAlbumList() {
         return albumList;
     }
 }
