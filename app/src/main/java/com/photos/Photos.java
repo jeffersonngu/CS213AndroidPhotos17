@@ -2,9 +2,9 @@ package com.photos;
 
 import android.app.Application;
 
-import com.photos.albumsoverview.Album;
+import com.photos.database.AlbumsDatabase;
+import com.photos.models.Album;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Photos extends Application {
@@ -14,7 +14,8 @@ public class Photos extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        albumList = new ArrayList<>();
+        AlbumsDatabase albumsDatabase = AlbumsDatabase.getInstance(this);
+        albumList = albumsDatabase.albumDao().getAllAlbums();
     }
 
     public static List<Album> getAlbumList() {

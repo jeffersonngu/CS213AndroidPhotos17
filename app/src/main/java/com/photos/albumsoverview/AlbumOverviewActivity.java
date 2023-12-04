@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.photos.Photos;
 import com.photos.R;
+import com.photos.models.Album;
 
 public class AlbumOverviewActivity extends AppCompatActivity {
 
