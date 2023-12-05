@@ -17,7 +17,8 @@ import java.util.List;
         @ForeignKey(entity = Album.AlbumInfo.class, parentColumns = {"id"}, childColumns = {"albumId"},
                 onUpdate = ForeignKey.CASCADE, onDelete = ForeignKey.CASCADE)
     }, indices = {
-        @Index(value = "uri", unique = true)
+        @Index(value = "uri", unique = true),
+        @Index(value = "albumId")
 })
 public class Photo {
 

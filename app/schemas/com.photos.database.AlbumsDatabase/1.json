@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c96edd2825ad12bb02bd4fa899310345",
+    "identityHash": "ff3ad0d31fb8a5f77d5db4e597de2d8b",
     "entities": [
       {
         "tableName": "albums",
@@ -90,6 +90,15 @@
             ],
             "orders": [],
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_photos_uri` ON `${TABLE_NAME}` (`uri`)"
+          },
+          {
+            "name": "index_photos_albumId",
+            "unique": false,
+            "columnNames": [
+              "albumId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_photos_albumId` ON `${TABLE_NAME}` (`albumId`)"
           }
         ],
         "foreignKeys": [
@@ -110,7 +119,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c96edd2825ad12bb02bd4fa899310345')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ff3ad0d31fb8a5f77d5db4e597de2d8b')"
     ]
   }
 }
