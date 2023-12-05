@@ -8,8 +8,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
-import com.photos.models.Album;
-import com.photos.models.Photo;
+import com.photos.domain.Album;
+import com.photos.domain.Photo;
 
 import java.util.List;
 

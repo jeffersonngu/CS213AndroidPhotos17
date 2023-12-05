@@ -1,4 +1,4 @@
-package com.photos;
+package com.photos.repository;
 
 import android.app.Application;
 
@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.photos.database.AlbumsDao;
 import com.photos.database.AlbumsDatabase;
-import com.photos.models.Album;
+import com.photos.domain.Album;
 
 import java.util.List;
 import java.util.concurrent.Executors;

@@ -1,4 +1,4 @@
-package com.photos;
+package com.photos.viewmodels;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
-import com.photos.models.Album;
+import com.photos.PhotosApplication;
+import com.photos.repository.PhotosRepository;
+import com.photos.domain.Album;
 
 import java.util.List;
 

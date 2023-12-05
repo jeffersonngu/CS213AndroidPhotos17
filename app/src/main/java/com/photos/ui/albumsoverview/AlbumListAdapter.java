@@ -1,4 +1,4 @@
-package com.photos.albumsoverview;
+package com.photos.ui.albumsoverview;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.photos.R;
-import com.photos.models.Album;
+import com.photos.domain.Album;
 
 import java.util.List;
 
@@ -22,15 +22,13 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
     private final AsyncListDiffer<Album> albumDiffer = new AsyncListDiffer<>(this, DIFF_CALLBACK);
     public static final DiffUtil.ItemCallback<Album> DIFF_CALLBACK = new DiffUtil.ItemCallback<>() {
         @Override
-        public boolean areItemsTheSame(
-                @NonNull Album oldAlbum, @NonNull Album newAlbum) {
+        public boolean areItemsTheSame(@NonNull Album oldAlbum, @NonNull Album newAlbum) {
             // User properties may have changed if reloaded from the DB, but ID is fixed
             return oldAlbum.getAlbumInfo().getId() == newAlbum.getAlbumInfo().getId();
         }
 
         @Override
-        public boolean areContentsTheSame(
-                @NonNull Album oldAlbum, @NonNull Album newAlbum) {
+        public boolean areContentsTheSame(@NonNull Album oldAlbum, @NonNull Album newAlbum) {
             // NOTE: if you use equals, your object must properly override Object#equals()
             // Incorrectly returning false here will result in too many animations.
             return oldAlbum.equals(newAlbum);

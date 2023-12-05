@@ -4,18 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.splashscreen.SplashScreen;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.photos.albumsoverview.AlbumOverviewActivity;
+import com.photos.ui.albumsoverview.AlbumOverviewActivity;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Right now only redirects us to AlbumOverviewActivity
+ * Later we might want to do stuff with SplashScreens
+ */
+public class StartActivity extends AppCompatActivity {
 
     private MainViewModel viewModel;
 

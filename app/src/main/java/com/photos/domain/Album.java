@@ -1,4 +1,4 @@
-package com.photos.models;
+package com.photos.domain;
 
 import androidx.annotation.NonNull;
 import androidx.room.Embedded;

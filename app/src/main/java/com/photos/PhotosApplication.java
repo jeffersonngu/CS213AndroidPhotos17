@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.photos.repository.PhotosRepository;
+
 public class PhotosApplication extends Application {
 
     @Override

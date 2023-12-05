@@ -1,4 +1,4 @@
-package com.photos.models;
+package com.photos.domain;
 
 import android.net.Uri;
 

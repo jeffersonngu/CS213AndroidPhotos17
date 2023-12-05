@@ -1,4 +1,4 @@
-package com.photos.albumviewer;
+package com.photos.ui.albumviewer;
 
 import androidx.appcompat.app.AppCompatActivity;
 

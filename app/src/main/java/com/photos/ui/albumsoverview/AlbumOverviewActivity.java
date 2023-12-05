@@ -1,4 +1,4 @@
-package com.photos.albumsoverview;
+package com.photos.ui.albumsoverview;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.photos.PhotosViewModel;
+import com.photos.viewmodels.PhotosViewModel;
 import com.photos.R;
-import com.photos.models.Album;
+import com.photos.domain.Album;
 
 public class AlbumOverviewActivity extends AppCompatActivity {
 

@@ -7,8 +7,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.photos.models.Album;
-import com.photos.models.Photo;
+import com.photos.domain.Album;
+import com.photos.domain.Photo;
 
 @Database(entities = { Album.AlbumInfo.class, Photo.class }, version = 1)
 @TypeConverters({ ListStringConverter.class, UriConverter.class })
