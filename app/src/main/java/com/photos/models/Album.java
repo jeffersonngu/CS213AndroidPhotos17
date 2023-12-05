@@ -46,6 +46,20 @@ public class Album {
         return albumInfo;
     }
 
+    /**
+     * For now we say that they are only equivalent if the names are the same, we do not care
+     * about our photoList for now
+     * @param obj Object to compare to
+     * @return Whether the Album is equal to obj
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Album) {
+            return albumInfo.equals(((Album) obj).albumInfo);
+        }
+        return false;
+    }
+
     @Entity(tableName = "albums", indices = {
             @Index(value = "name", unique = true)
     })
@@ -73,5 +87,13 @@ public class Album {
 
         @NonNull
         public String getName() { return name; }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof AlbumInfo) {
+                return name.equalsIgnoreCase(((AlbumInfo) obj).name);
+            }
+            return false;
+        }
     }
 }

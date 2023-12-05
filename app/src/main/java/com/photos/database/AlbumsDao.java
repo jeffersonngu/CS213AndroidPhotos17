@@ -1,5 +1,6 @@
 package com.photos.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -51,5 +52,5 @@ public abstract class AlbumsDao {
 
     @Transaction
     @Query("SELECT * FROM albums")
-    public abstract List<Album> getAllAlbums();
+    public abstract LiveData<List<Album>> getAllAlbums();
 }

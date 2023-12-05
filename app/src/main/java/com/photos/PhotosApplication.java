@@ -7,30 +7,22 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.photos.database.AlbumsDatabase;
-import com.photos.models.Album;
-
-import java.util.List;
-
-public class Photos extends Application {
-
-    private static List<Album> albumList;
-
-    private final AlbumsDatabase DB = AlbumsDatabase.getInstance(this);
+public class PhotosApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        albumList = DB.albumDao().getAllAlbums();
-
         registerCallbacks();
     }
 
-    public static List<Album> getAlbumList() {
-        return albumList;
+    public PhotosRepository getPhotosRepository() {
+        return new PhotosRepository(this);
     }
 
+    /**
+     * Not really used, maybe later... eventually
+     */
     private void registerCallbacks() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 
@@ -51,8 +43,7 @@ public class Photos extends Application {
 
             @Override
             public void onActivityPaused(@NonNull Activity activity) {
-                // Perhaps we want to do batch updates but for now no, we will use incremental
-                // DB.albumDao().upsertAlbumList(albumList);
+
             }
 
             @Override
