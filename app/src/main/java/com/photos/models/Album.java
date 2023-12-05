@@ -3,6 +3,8 @@ package com.photos.models;
 import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.Relation;
 
@@ -14,7 +16,7 @@ public class Album {
     @Embedded
     private final AlbumInfo albumInfo;
 
-    @Relation(parentColumn = "name", entityColumn = "uri")
+    @Relation(parentColumn = "id", entityColumn = "albumId")
     private final List<Photo> photoList;
 
     public Album(String name) {
@@ -40,15 +42,33 @@ public class Album {
         return photoList;
     }
 
-    @Entity(tableName = "albums")
+    public AlbumInfo getAlbumInfo() {
+        return albumInfo;
+    }
+
+    @Entity(tableName = "albums", indices = {
+            @Index(value = "name", unique = true)
+    })
     public static class AlbumInfo {
 
+        @PrimaryKey(autoGenerate = true)
+        private int id;
+
         @NonNull
-        @PrimaryKey
         private String name;
 
+        @Ignore
         public AlbumInfo(@NonNull String name) {
             this.name = name;
+        }
+
+        public AlbumInfo(int id, @NonNull String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
         }
 
         @NonNull
