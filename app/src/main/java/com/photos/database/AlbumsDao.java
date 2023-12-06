@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.Update;
 
 import com.photos.models.Album;
 import com.photos.models.Photo;
@@ -19,17 +20,39 @@ import java.util.List;
 @Dao
 public abstract class AlbumsDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void upsertAlbumInfo(Album.AlbumInfo albumInfo);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    public abstract long insertAlbumInfo(Album.AlbumInfo albumInfo);
+
+    @Update
+    public abstract void updateAlbumInfo(Album.AlbumInfo albumInfo);
+
+    @Transaction
+    public void upsertAlbumInfo(Album.AlbumInfo albumInfo) {
+        if (insertAlbumInfo(albumInfo) == -1) {
+            updateAlbumInfo(albumInfo);
+        }
+    }
 
     @Delete
     public abstract void deleteAlbumInfo(Album.AlbumInfo albumInfo);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void upsertPhoto(Photo photo);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    public abstract long insertPhoto(Photo photo);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void upsertPhotoList(List<Photo> photoList);
+    @Update
+    public abstract void updatePhoto(Photo photo);
+
+    @Transaction
+    public void upsertPhoto(Photo photo) {
+        if (insertPhoto(photo) == -1) {
+            updatePhoto(photo);
+        }
+    }
+
+    @Transaction
+    public void upsertPhotoList(List<Photo> photoList) {
+        photoList.forEach(this::upsertPhoto);
+    }
 
     @Delete
     public abstract void deletePhoto(Photo photo);
