@@ -15,7 +15,7 @@ import com.photos.R;
 import com.photos.models.Album;
 import com.photos.models.Photo;
 
-public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.ViewHolder> {
+public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.ViewHolder> {
 
     private final Context context;
 
@@ -33,7 +33,7 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
         }
     });
 
-    public PhotoListAdapter(Context context, Album album) {
+    public AlbumViewerAdapter(Context context, Album album) {
         this.context = context;
         if (album != null) this.mDiffer.submitList(album.getPhotoList());
     }
@@ -45,7 +45,7 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new PhotoListAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_photo, parent, false));
+        return new AlbumViewerAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_photo, parent, false));
     }
 
     @Override

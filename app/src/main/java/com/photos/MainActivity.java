@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * Right now only redirects us to AlbumOverviewActivity
  * Later we might want to do stuff with SplashScreens
  */
-public class StartActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private MainViewModel viewModel;
 

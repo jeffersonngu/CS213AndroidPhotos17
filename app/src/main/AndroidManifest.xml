@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Photos">
         <activity
-            android:name=".StartActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.App.Starting">
             <intent-filter>

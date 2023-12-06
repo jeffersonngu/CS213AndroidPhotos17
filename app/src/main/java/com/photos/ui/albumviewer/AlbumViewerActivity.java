@@ -13,7 +13,7 @@ import com.photos.viewmodels.AlbumViewerViewModel;
 
 public class AlbumViewerActivity extends AppCompatActivity {
 
-    private PhotoListAdapter adapter;
+    private AlbumViewerAdapter adapter;
     private AlbumViewerViewModel albumViewerViewModel;
 
     @Override
@@ -33,7 +33,7 @@ public class AlbumViewerActivity extends AppCompatActivity {
 
         LiveData<Album> albumLiveData = albumViewerViewModel.getAlbum(albumId);
 
-        adapter = new PhotoListAdapter(this, albumLiveData.getValue());
+        adapter = new AlbumViewerAdapter(this, albumLiveData.getValue());
         recyclerView.setAdapter(adapter);
 
         albumLiveData.observe(this, album -> adapter.setAlbum(album));

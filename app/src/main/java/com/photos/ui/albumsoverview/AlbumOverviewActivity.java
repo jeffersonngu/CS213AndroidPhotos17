@@ -17,7 +17,7 @@ import com.photos.viewmodels.AlbumOverviewViewModel;
 
 public class AlbumOverviewActivity extends AppCompatActivity {
 
-    private AlbumListAdapter adapter;
+    private AlbumOverviewAdapter adapter;
     private AlbumOverviewViewModel albumOverviewViewModel;
 
     @Override
@@ -35,7 +35,7 @@ public class AlbumOverviewActivity extends AppCompatActivity {
         albumOverviewViewModel.addNewAlbum(new Album("Meep")); // Test
         albumOverviewViewModel.addNewAlbum(new Album("Moop")); // Test
 
-        adapter = new AlbumListAdapter(this, albumOverviewViewModel.getAlbumListLiveData().getValue());
+        adapter = new AlbumOverviewAdapter(this, albumOverviewViewModel.getAlbumListLiveData().getValue());
         recyclerView.setAdapter(adapter);
 
         albumOverviewViewModel.getAlbumListLiveData().observe(this, albums -> adapter.setAlbumList(albums));

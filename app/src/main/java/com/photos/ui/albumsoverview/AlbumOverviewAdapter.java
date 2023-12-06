@@ -17,7 +17,7 @@ import com.photos.models.Album;
 
 import java.util.List;
 
-public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.ViewHolder> {
+public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdapter.ViewHolder> {
 
     private final Context context;
 
@@ -34,7 +34,7 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
         }
     });
 
-    public AlbumListAdapter(Context context, List<Album> albumList) {
+    public AlbumOverviewAdapter(Context context, List<Album> albumList) {
         this.context = context;
         this.mDiffer.submitList(albumList);
     }
