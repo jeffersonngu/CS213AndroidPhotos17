@@ -8,8 +8,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
-import com.photos.domain.Album;
-import com.photos.domain.Photo;
+import com.photos.models.Album;
+import com.photos.models.Photo;
 
 import java.util.List;
 
@@ -53,4 +53,8 @@ public abstract class AlbumsDao {
     @Transaction
     @Query("SELECT * FROM albums")
     public abstract LiveData<List<Album>> getAllAlbums();
+
+    @Transaction
+    @Query("SELECT * FROM albums WHERE id = :albumId")
+    public abstract LiveData<Album> getAlbum(int albumId);
 }

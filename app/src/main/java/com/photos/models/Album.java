@@ -1,4 +1,4 @@
-package com.photos.domain;
+package com.photos.models;
 
 import androidx.annotation.NonNull;
 import androidx.room.Embedded;
@@ -90,8 +90,9 @@ public class Album {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof AlbumInfo) {
-                return name.equalsIgnoreCase(((AlbumInfo) obj).name);
+            if (obj instanceof AlbumInfo otherAlbum) {
+                return id == otherAlbum.getId()
+                        && name.equalsIgnoreCase(otherAlbum.getName());
             }
             return false;
         }

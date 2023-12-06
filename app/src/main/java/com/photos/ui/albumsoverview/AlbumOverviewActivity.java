@@ -10,37 +10,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.photos.R;
+import com.photos.models.Album;
 import com.photos.ui.albumviewer.AlbumViewerActivity;
 import com.photos.viewmodels.AlbumOverviewViewModel;
-import com.photos.R;
-import com.photos.domain.Album;
 
 public class AlbumOverviewActivity extends AppCompatActivity {
 
     private AlbumListAdapter adapter;
-
-    private AlbumOverviewViewModel photosViewModel;
+    private AlbumOverviewViewModel albumOverviewViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        photosViewModel = new ViewModelProvider(
+        albumOverviewViewModel = new ViewModelProvider(
                 this,
                 ViewModelProvider.Factory.from(AlbumOverviewViewModel.INITIALIZER)
         ).get(AlbumOverviewViewModel.class);
 
         setContentView(R.layout.activity_albumoverview);
-
         RecyclerView recyclerView = findViewById(R.id.rv_albumoverview);
 
-        photosViewModel.addNewAlbum(new Album("Meep")); // Test
-        photosViewModel.addNewAlbum(new Album("Moop")); // Test
+        albumOverviewViewModel.addNewAlbum(new Album("Meep")); // Test
+        albumOverviewViewModel.addNewAlbum(new Album("Moop")); // Test
 
-        adapter = new AlbumListAdapter(this, photosViewModel.getAlbumListLiveData().getValue());
+        adapter = new AlbumListAdapter(this, albumOverviewViewModel.getAlbumListLiveData().getValue());
         recyclerView.setAdapter(adapter);
 
-        photosViewModel.getAlbumListLiveData().observe(this, albums -> adapter.setAlbumList(albums));
+        albumOverviewViewModel.getAlbumListLiveData().observe(this, albums -> adapter.setAlbumList(albums));
 
         Button addAlbumButton = findViewById(R.id.btn_albumoverview_add);
         addAlbumButton.setOnClickListener(l -> addAlbumDialog());
@@ -54,7 +52,7 @@ public class AlbumOverviewActivity extends AppCompatActivity {
                 .setView(editText)
                 .setPositiveButton("Submit", (dialogInterface, which) -> {
                     String input = editText.getText().toString();
-                    photosViewModel.addNewAlbum(new Album(input));
+                    albumOverviewViewModel.addNewAlbum(new Album(input));
                 })
                 .setNegativeButton("Cancel", null)
                 .create()

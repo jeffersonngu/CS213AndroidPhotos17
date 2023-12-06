@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.photos.R;
-import com.photos.domain.Album;
+import com.photos.models.Album;
 
 import java.util.List;
 
@@ -22,29 +22,25 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
     private final Context context;
 
     /* https://developer.android.com/reference/android/support/v7/recyclerview/extensions/AsyncListDiffer.html */
-    private final AsyncListDiffer<Album> albumDiffer = new AsyncListDiffer<>(this, DIFF_CALLBACK);
-    public static final DiffUtil.ItemCallback<Album> DIFF_CALLBACK = new DiffUtil.ItemCallback<>() {
+    private final AsyncListDiffer<Album> mDiffer = new AsyncListDiffer<>(this, new DiffUtil.ItemCallback<>() {
         @Override
         public boolean areItemsTheSame(@NonNull Album oldAlbum, @NonNull Album newAlbum) {
-            // User properties may have changed if reloaded from the DB, but ID is fixed
             return oldAlbum.getAlbumInfo().getId() == newAlbum.getAlbumInfo().getId();
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull Album oldAlbum, @NonNull Album newAlbum) {
-            // NOTE: if you use equals, your object must properly override Object#equals()
-            // Incorrectly returning false here will result in too many animations.
             return oldAlbum.equals(newAlbum);
         }
-    };
+    });
 
     public AlbumListAdapter(Context context, List<Album> albumList) {
         this.context = context;
-        this.albumDiffer.submitList(albumList);
+        this.mDiffer.submitList(albumList);
     }
 
     public void setAlbumList(List<Album> albumList) {
-        albumDiffer.submitList(albumList);
+        mDiffer.submitList(albumList);
     }
 
     @NonNull
@@ -55,7 +51,7 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Album currentAlbum = albumDiffer.getCurrentList().get(position);
+        Album currentAlbum = mDiffer.getCurrentList().get(position);
 
         holder.title.setText(currentAlbum.getName());
         holder.photoCount.setText(String.valueOf(currentAlbum.getPhotoList().size()));
@@ -63,7 +59,7 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
 
     @Override
     public int getItemCount() {
-       return albumDiffer.getCurrentList().size();
+       return mDiffer.getCurrentList().size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -84,7 +80,7 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
         @Override
         public void onClick(View v) {
             if (getLayoutPosition() != RecyclerView.NO_POSITION && getLayoutPosition() == getAdapterPosition()) {
-                ((AlbumOverviewActivity) context).viewAlbum(albumDiffer.getCurrentList().get(getLayoutPosition()));
+                ((AlbumOverviewActivity) context).viewAlbum(mDiffer.getCurrentList().get(getLayoutPosition()));
             }
         }
     }

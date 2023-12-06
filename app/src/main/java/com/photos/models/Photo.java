@@ -1,4 +1,4 @@
-package com.photos.domain;
+package com.photos.models;
 
 import android.net.Uri;
 
@@ -28,6 +28,9 @@ public class Photo {
     @NonNull
     private final Uri uri;
 
+    @ColumnInfo
+    private int albumId;
+
     /**
      * Location tag type
      */
@@ -39,9 +42,6 @@ public class Photo {
      */
     @ColumnInfo
     private List<String> people = new ArrayList<>();
-
-    @ColumnInfo
-    private int albumId;
 
     /**
      * Main constructor
@@ -67,13 +67,22 @@ public class Photo {
     @NonNull
     public Uri getUri() { return uri; }
 
-    public String getLocation() { return location; }
-
-    public List<String> getPeople() { return people; }
-
     /**
      * The id of the Album that owns the Photo
      * @return The foreign key "albumId"
      */
     public int getAlbumId() { return albumId; }
+
+    public String getLocation() { return location; }
+
+    public List<String> getPeople() { return people; }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Photo otherPhoto) {
+            return this.getId() == otherPhoto.getId()
+                    && this.getUri().equals(otherPhoto.getUri());
+        }
+        return false;
+    }
 }

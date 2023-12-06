@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.photos.database.AlbumsDao;
 import com.photos.database.AlbumsDatabase;
-import com.photos.domain.Album;
+import com.photos.models.Album;
 
 import java.util.List;
 import java.util.concurrent.Executors;
