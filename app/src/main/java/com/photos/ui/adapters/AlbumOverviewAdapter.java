@@ -1,4 +1,4 @@
-package com.photos.ui.albumsoverview;
+package com.photos.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.photos.R;
 import com.photos.models.Album;
+import com.photos.ui.activities.AlbumOverviewActivity;
 
 import java.util.List;
 

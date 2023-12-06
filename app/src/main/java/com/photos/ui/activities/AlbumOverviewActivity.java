@@ -1,4 +1,4 @@
-package com.photos.ui.albumsoverview;
+package com.photos.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.photos.R;
 import com.photos.models.Album;
-import com.photos.ui.albumviewer.AlbumViewerActivity;
+import com.photos.ui.adapters.AlbumOverviewAdapter;
 import com.photos.viewmodels.AlbumOverviewViewModel;
 
 public class AlbumOverviewActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.photos.ui.albumviewer;
+package com.photos.ui.activities;
 
 import android.os.Bundle;
 
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.photos.R;
 import com.photos.models.Album;
+import com.photos.ui.adapters.AlbumViewerAdapter;
 import com.photos.viewmodels.AlbumViewerViewModel;
 
 public class AlbumViewerActivity extends AppCompatActivity {

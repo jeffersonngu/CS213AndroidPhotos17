@@ -19,13 +19,13 @@
         </activity>
 
         <activity
-            android:name=".ui.albumsoverview.AlbumOverviewActivity"
+            android:name=".ui.activities.AlbumOverviewActivity"
             android:exported="true"
             android:theme="@style/Theme.Photos">
         </activity>
 
         <activity
-            android:name=".ui.albumviewer.AlbumViewerActivity"
+            android:name=".ui.activities.AlbumViewerActivity"
             android:exported="true"
             android:theme="@style/Theme.Photos">
         </activity>
