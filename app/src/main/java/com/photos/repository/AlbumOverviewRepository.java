@@ -11,12 +11,12 @@ import com.photos.domain.Album;
 import java.util.List;
 import java.util.concurrent.Executors;
 
-public class PhotosRepository {
+public class AlbumOverviewRepository {
 
     private final AlbumsDao albumsDao;
     private final LiveData<List<Album>> albumListData;
 
-    public PhotosRepository(Application application) {
+    public AlbumOverviewRepository(Application application) {
         AlbumsDatabase albumsDatabase = AlbumsDatabase.getInstance(application);
         albumsDao = albumsDatabase.albumDao();
         albumListData = albumsDao.getAllAlbums();

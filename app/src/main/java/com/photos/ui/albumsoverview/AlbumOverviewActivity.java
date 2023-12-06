@@ -1,5 +1,6 @@
 package com.photos.ui.albumsoverview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -7,11 +8,10 @@ import android.widget.EditText;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.photos.viewmodels.PhotosViewModel;
+import com.photos.ui.albumviewer.AlbumViewerActivity;
+import com.photos.viewmodels.AlbumOverviewViewModel;
 import com.photos.R;
 import com.photos.domain.Album;
 
@@ -19,7 +19,7 @@ public class AlbumOverviewActivity extends AppCompatActivity {
 
     private AlbumListAdapter adapter;
 
-    private PhotosViewModel photosViewModel;
+    private AlbumOverviewViewModel photosViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +27,8 @@ public class AlbumOverviewActivity extends AppCompatActivity {
 
         photosViewModel = new ViewModelProvider(
                 this,
-                ViewModelProvider.Factory.from(PhotosViewModel.initializer)
-        ).get(PhotosViewModel.class);
+                ViewModelProvider.Factory.from(AlbumOverviewViewModel.INITIALIZER)
+        ).get(AlbumOverviewViewModel.class);
 
         setContentView(R.layout.activity_albumoverview);
 
@@ -37,10 +37,7 @@ public class AlbumOverviewActivity extends AppCompatActivity {
         photosViewModel.addNewAlbum(new Album("Meep")); // Test
         photosViewModel.addNewAlbum(new Album("Moop")); // Test
 
-        LinearLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(layoutManager);
-
-        adapter = new AlbumListAdapter(photosViewModel.getAlbumListLiveData().getValue());
+        adapter = new AlbumListAdapter(this, photosViewModel.getAlbumListLiveData().getValue());
         recyclerView.setAdapter(adapter);
 
         photosViewModel.getAlbumListLiveData().observe(this, albums -> adapter.setAlbumList(albums));
@@ -62,5 +59,11 @@ public class AlbumOverviewActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();
+    }
+
+    public void viewAlbum(Album album) {
+        Intent intent = new Intent(this, AlbumViewerActivity.class);
+        intent.putExtra("albumId", album.getAlbumInfo().getId());
+        this.startActivity(intent);
     }
 }

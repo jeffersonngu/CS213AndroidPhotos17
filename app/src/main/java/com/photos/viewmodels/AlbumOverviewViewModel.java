@@ -7,19 +7,19 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
 import com.photos.PhotosApplication;
-import com.photos.repository.PhotosRepository;
+import com.photos.repository.AlbumOverviewRepository;
 import com.photos.domain.Album;
 
 import java.util.List;
 
-public class PhotosViewModel extends ViewModel {
+public class AlbumOverviewViewModel extends ViewModel {
 
     @NonNull
-    private final PhotosRepository photosRepository;
+    private final AlbumOverviewRepository photosRepository;
 
     private final LiveData<List<Album>> albumListLiveData;
 
-    public PhotosViewModel(@NonNull PhotosRepository photosRepository) {
+    public AlbumOverviewViewModel(@NonNull AlbumOverviewRepository photosRepository) {
         this.photosRepository = photosRepository;
         this.albumListLiveData = photosRepository.getAlbumListData();
     }
@@ -34,12 +34,12 @@ public class PhotosViewModel extends ViewModel {
     }
 
     /* https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#java */
-    public static final ViewModelInitializer<PhotosViewModel> initializer = new ViewModelInitializer<>(
-            PhotosViewModel.class,
+    public static final ViewModelInitializer<AlbumOverviewViewModel> INITIALIZER = new ViewModelInitializer<>(
+            AlbumOverviewViewModel.class,
             creationExtras -> {
                 PhotosApplication app = (PhotosApplication) creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY);
                 assert app != null;
-                return new PhotosViewModel(app.getPhotosRepository());
+                return new AlbumOverviewViewModel(new AlbumOverviewRepository(app));
             }
     );
 }

@@ -7,8 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.photos.repository.PhotosRepository;
-
 public class PhotosApplication extends Application {
 
     @Override
@@ -16,10 +14,6 @@ public class PhotosApplication extends Application {
         super.onCreate();
 
         registerCallbacks();
-    }
-
-    public PhotosRepository getPhotosRepository() {
-        return new PhotosRepository(this);
     }
 
     /**

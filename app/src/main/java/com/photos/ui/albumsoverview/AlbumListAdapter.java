@@ -1,5 +1,6 @@
 package com.photos.ui.albumsoverview;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import java.util.List;
 
 public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.ViewHolder> {
 
+    private final Context context;
+
     /* https://developer.android.com/reference/android/support/v7/recyclerview/extensions/AsyncListDiffer.html */
     private final AsyncListDiffer<Album> albumDiffer = new AsyncListDiffer<>(this, DIFF_CALLBACK);
     public static final DiffUtil.ItemCallback<Album> DIFF_CALLBACK = new DiffUtil.ItemCallback<>() {
@@ -35,7 +38,8 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
         }
     };
 
-    public AlbumListAdapter(List<Album> albumList) {
+    public AlbumListAdapter(Context context, List<Album> albumList) {
+        this.context = context;
         this.albumDiffer.submitList(albumList);
     }
 
@@ -62,7 +66,7 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
        return albumDiffer.getCurrentList().size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView thumbnail;
         private final TextView title;
@@ -70,9 +74,18 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.View
 
         public ViewHolder(@NonNull View view) {
             super(view);
+            view.setOnClickListener(this);
+
             title = view.findViewById(R.id.tv_album_name);
             thumbnail = view.findViewById(R.id.iv_album_thumbnail);
             photoCount = view.findViewById(R.id.tv_album_photocount);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (getLayoutPosition() != RecyclerView.NO_POSITION && getLayoutPosition() == getAdapterPosition()) {
+                ((AlbumOverviewActivity) context).viewAlbum(albumDiffer.getCurrentList().get(getLayoutPosition()));
+            }
         }
     }
 }
