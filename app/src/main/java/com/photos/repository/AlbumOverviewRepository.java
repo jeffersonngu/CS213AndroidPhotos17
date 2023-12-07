@@ -30,7 +30,18 @@ public class AlbumOverviewRepository {
         Executors.newSingleThreadExecutor().execute(() -> albumsDao.insertAlbum(album));
     }
 
+    public void updateAlbum(Album album) {
+        Executors.newSingleThreadExecutor().execute(() -> albumsDao.updateAlbum(album));
+    }
+
     public void deleteAlbum(Album album) {
-        albumsDao.deleteAlbum(album);
+        Executors.newSingleThreadExecutor().execute(() -> albumsDao.deleteAlbum(album));
+    }
+
+    public void renameAlbum(Album album, String newName) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            album.rename(newName);
+            updateAlbum(album);
+        });
     }
 }

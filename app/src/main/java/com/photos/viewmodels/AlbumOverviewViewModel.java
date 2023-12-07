@@ -32,6 +32,10 @@ public class AlbumOverviewViewModel extends ViewModel {
         albumOverviewRepository.insertAlbum(album);
     }
 
+    public void renameAlbum(Album album, String newName) {
+        albumOverviewRepository.renameAlbum(album, newName);
+    }
+
     public void removeAlbum(Album album) {
         albumOverviewRepository.deleteAlbum(album);
     }
