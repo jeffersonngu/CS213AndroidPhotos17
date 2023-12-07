@@ -28,4 +28,8 @@ public class AlbumViewerRepository {
     public void insertPhoto(Photo photo) {
         Executors.newSingleThreadExecutor().execute(() -> albumsDao.insertPhoto(photo));
     }
+
+    public void deletePhoto(Photo photo) {
+        Executors.newSingleThreadExecutor().execute(() -> albumsDao.deletePhoto(photo));
+    }
 }

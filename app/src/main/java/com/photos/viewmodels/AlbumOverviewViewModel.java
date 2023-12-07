@@ -32,6 +32,10 @@ public class AlbumOverviewViewModel extends ViewModel {
         albumOverviewRepository.insertAlbum(album);
     }
 
+    public void removeAlbum(Album album) {
+        albumOverviewRepository.deleteAlbum(album);
+    }
+
     /* https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#java */
     public static final ViewModelInitializer<AlbumOverviewViewModel> INITIALIZER = new ViewModelInitializer<>(
         AlbumOverviewViewModel.class,

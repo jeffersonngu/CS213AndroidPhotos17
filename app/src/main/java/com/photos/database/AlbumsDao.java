@@ -12,7 +12,9 @@ import androidx.room.Update;
 import com.photos.models.Album;
 import com.photos.models.Photo;
 
+import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Handles our Inserts and Transactions
@@ -26,9 +28,6 @@ public abstract class AlbumsDao {
     @Update
     public abstract void updateAlbumInfo(Album.AlbumInfo albumInfo);
 
-    @Delete
-    public abstract void deleteAlbumInfo(Album.AlbumInfo albumInfo);
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract void insertPhoto(Photo photo);
 
@@ -40,9 +39,6 @@ public abstract class AlbumsDao {
 
     @Update
     public abstract void updatePhotoList(List<Photo> photoList);
-
-    @Delete
-    public abstract void deletePhoto(Photo photo);
 
     @Transaction
     public void insertAlbum(Album album) {
@@ -56,8 +52,29 @@ public abstract class AlbumsDao {
         updatePhotoList(album.getPhotoList());
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void deletePhotoFile(Photo photo) {
+        File file = new File(Objects.requireNonNull(photo.getUri().getPath()));
+        if (file.exists()) {
+            file.delete();
+        }
+    }
+
+    @Delete
+    abstract void deleteAlbumInfo(Album.AlbumInfo albumInfo);
+
+    @Delete
+    abstract void deletePhotoEntity(Photo photo);
+
+    @Transaction
+    public void deletePhoto(Photo photo) {
+        deletePhotoFile(photo);
+        deletePhotoEntity(photo);
+    }
+
     @Transaction
     public void deleteAlbum(Album album) {
+        album.getPhotoList().forEach(this::deletePhotoFile);
         deleteAlbumInfo(album.getAlbumInfo()); /* Because we use onDelete CASCADE we do not have to worry about Photo */
     }
 

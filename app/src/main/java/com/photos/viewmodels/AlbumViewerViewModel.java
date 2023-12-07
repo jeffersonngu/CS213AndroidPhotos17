@@ -28,6 +28,10 @@ public class AlbumViewerViewModel extends ViewModel {
         albumViewerRepository.insertPhoto(photo);
     }
 
+    public void removePhoto(Photo photo) {
+        albumViewerRepository.deletePhoto(photo);
+    }
+
     /* https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#java */
     public static final ViewModelInitializer<AlbumViewerViewModel> INITIALIZER = new ViewModelInitializer<>(
         AlbumViewerViewModel.class,

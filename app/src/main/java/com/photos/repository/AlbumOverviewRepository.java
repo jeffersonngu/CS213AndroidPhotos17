@@ -29,4 +29,8 @@ public class AlbumOverviewRepository {
     public void insertAlbum(Album album) {
         Executors.newSingleThreadExecutor().execute(() -> albumsDao.insertAlbum(album));
     }
+
+    public void deleteAlbum(Album album) {
+        albumsDao.deleteAlbum(album);
+    }
 }
