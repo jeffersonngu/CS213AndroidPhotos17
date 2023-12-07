@@ -64,7 +64,7 @@ public class AlbumViewerActivity extends AppCompatActivity implements PopupMenu.
     public void showMenu(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this);
-        popup.getMenuInflater().inflate(R.menu.popm_aclbumviewer, popup.getMenu());
+        popup.getMenuInflater().inflate(R.menu.popm_albumviewer, popup.getMenu());
         popup.show();
     }
 
