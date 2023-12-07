@@ -9,4 +9,6 @@
     <string name="albumviewer_addfromfile">Add From File</string>
     <string name="albumviewer_addfromurl">Add From URL</string>
     <string name="albumviewer_nulluri">Could not find selected photo</string>
+    <string name="common_rename">Rename</string>
+    <string name="common_delete">Delete</string>
 </resources>

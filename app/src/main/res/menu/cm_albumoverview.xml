@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/cm_albumoverview_rename"
+        android:title="@string/common_rename" />
+    <item
+        android:id="@+id/cm_albumoverview_delete"
+        android:title="@string/common_delete" />
+</menu>

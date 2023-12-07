@@ -1,6 +1,5 @@
 package com.photos.ui.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +14,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.photos.R;
 import com.photos.models.Album;
 import com.photos.models.Photo;
-import com.photos.ui.activities.AlbumOverviewActivity;
+import com.photos.ui.activities.AlbumOverviewListener;
 
 import java.util.List;
 import java.util.Objects;
 
 public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdapter.ViewHolder> {
 
-    private final Context context;
+    private final AlbumOverviewListener listener;
+
+    /**
+     * RecyclerView as of now does not directly use ContextMenuInfo, we can do
+     * a rather hacky workaround by just saving the last known clicked
+     * position and using that.
+     */
+    private int lastLongClickPosition;
 
     /* https://developer.android.com/reference/android/support/v7/recyclerview/extensions/AsyncListDiffer.html */
     private final AsyncListDiffer<Album> mDiffer = new AsyncListDiffer<>(this, new DiffUtil.ItemCallback<>() {
@@ -44,8 +50,8 @@ public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdap
         }
     });
 
-    public AlbumOverviewAdapter(Context context, List<Album> albumList) {
-        this.context = context;
+    public AlbumOverviewAdapter(AlbumOverviewListener listener, List<Album> albumList) {
+        this.listener = listener;
         setAlbumList(albumList);
     }
 
@@ -77,6 +83,10 @@ public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdap
        return mDiffer.getCurrentList().size();
     }
 
+    public Album getLastLongClickAlbum() {
+        return mDiffer.getCurrentList().get(lastLongClickPosition);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView thumbnail;
@@ -86,16 +96,22 @@ public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdap
         public ViewHolder(@NonNull View view) {
             super(view);
             view.setOnClickListener(this);
+            view.setOnLongClickListener(null);
 
             title = view.findViewById(R.id.tv_album_name);
             thumbnail = view.findViewById(R.id.iv_album_thumbnail);
             photoCount = view.findViewById(R.id.tv_album_photocount);
+
+            view.setOnLongClickListener(tempView -> {
+                lastLongClickPosition = getLayoutPosition();
+                return false;
+            });
         }
 
         @Override
         public void onClick(View v) {
             if (getLayoutPosition() != RecyclerView.NO_POSITION && getLayoutPosition() == getAdapterPosition()) {
-                ((AlbumOverviewActivity) context).viewAlbum(mDiffer.getCurrentList().get(getLayoutPosition()));
+                listener.viewAlbum(mDiffer.getCurrentList().get(getLayoutPosition()));
             }
         }
     }

@@ -35,9 +35,6 @@ public abstract class AlbumsDao {
     public abstract void insertPhotoList(List<Photo> photoList);
 
     @Update
-    public abstract void updatePhoto(Photo photo);
-
-    @Update
     public abstract void updatePhotoList(List<Photo> photoList);
 
     @Transaction
@@ -51,6 +48,9 @@ public abstract class AlbumsDao {
         updateAlbumInfo(album.getAlbumInfo());
         updatePhotoList(album.getPhotoList());
     }
+
+    @Query("UPDATE albums SET name = :newName WHERE id = :albumId")
+    public abstract void renameAlbum(int albumId, String newName);
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void deletePhotoFile(Photo photo) {
