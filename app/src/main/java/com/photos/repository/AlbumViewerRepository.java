@@ -25,6 +25,6 @@ public class AlbumViewerRepository {
     }
 
     public void upsertPhoto(Photo photo) {
-        Executors.newSingleThreadExecutor().execute(() -> albumsDao.updatePhoto(photo));
+        Executors.newSingleThreadExecutor().execute(() -> albumsDao.upsertPhoto(photo));
     }
 }

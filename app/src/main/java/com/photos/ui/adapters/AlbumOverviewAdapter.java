@@ -37,7 +37,7 @@ public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdap
 
     public AlbumOverviewAdapter(Context context, List<Album> albumList) {
         this.context = context;
-        this.mDiffer.submitList(albumList);
+        setAlbumList(albumList);
     }
 
     public void setAlbumList(List<Album> albumList) {

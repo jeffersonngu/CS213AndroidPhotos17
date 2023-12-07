@@ -35,7 +35,7 @@ public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.
 
     public AlbumViewerAdapter(Context context, Album album) {
         this.context = context;
-        if (album != null) this.mDiffer.submitList(album.getPhotoList());
+        setAlbum(album);
     }
 
     public void setAlbum(Album album) {
