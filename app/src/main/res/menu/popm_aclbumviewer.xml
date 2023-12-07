@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/popm_albumviewer_gallery"
+        android:title="@string/albumviewer_addfromgallery" />
+    <item
+        android:id="@+id/popm_albumviewer_file"
+        android:title="@string/albumviewer_addfromfile" />
+    <item
+        android:id="@+id/popm_albumviewer_url"
+        android:title="@string/albumviewer_addfromurl" />
+</menu>

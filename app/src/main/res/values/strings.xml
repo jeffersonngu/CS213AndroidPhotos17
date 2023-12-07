@@ -5,4 +5,7 @@
     <string name="albumoverview_contentdescription">Image</string>
     <string name="albumoverview_placeholder">Placeholder Text</string>
     <string name="photooverview_contentdescription">Image</string>
+    <string name="albumviewer_addfromgallery">Add From Gallery</string>
+    <string name="albumviewer_addfromfile">Add From File</string>
+    <string name="albumviewer_addfromurl">Add From URL</string>
 </resources>

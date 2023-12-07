@@ -7,6 +7,9 @@ import androidx.lifecycle.LiveData;
 import com.photos.database.AlbumsDao;
 import com.photos.database.AlbumsDatabase;
 import com.photos.models.Album;
+import com.photos.models.Photo;
+
+import java.util.concurrent.Executors;
 
 public class AlbumViewerRepository {
 
@@ -19,5 +22,9 @@ public class AlbumViewerRepository {
 
     public LiveData<Album> getAlbum(int albumId) {
         return albumsDao.getAlbum(albumId);
+    }
+
+    public void upsertPhoto(Photo photo) {
+        Executors.newSingleThreadExecutor().execute(() -> albumsDao.updatePhoto(photo));
     }
 }

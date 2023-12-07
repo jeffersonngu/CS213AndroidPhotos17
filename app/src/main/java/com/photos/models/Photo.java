@@ -29,7 +29,7 @@ public class Photo {
     private final Uri uri;
 
     @ColumnInfo
-    private int albumId;
+    private final int albumId;
 
     /**
      * Location tag type
@@ -41,15 +41,17 @@ public class Photo {
      * Person tag type
      */
     @ColumnInfo
-    private List<String> people = new ArrayList<>();
+    private final List<String> people;
 
     /**
      * Main constructor
      * @param uri URI of Photo
      */
     @Ignore
-    public Photo(@NonNull Uri uri) {
+    public Photo(@NonNull Uri uri, int albumId) {
         this.uri = uri;
+        this.albumId = albumId;
+        this.people = new ArrayList<>();
     }
 
     public Photo(int id, @NonNull Uri uri, String location, List<String> people, int albumId) {

@@ -19,7 +19,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:scrollbars="vertical"
         app:spanCount="3"
-        tools:listitem="@layout/item_photo" />
+        tools:listitem="@layout/item_photo"
+        android:focusable="false" />
 
     <Button
         android:id="@+id/btn_albumviewer_add"
@@ -27,5 +28,6 @@
         android:layout_height="60dp"
         android:text="@string/common_add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:focusable="auto" />
 </androidx.constraintlayout.widget.ConstraintLayout>
