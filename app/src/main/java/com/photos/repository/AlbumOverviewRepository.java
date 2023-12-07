@@ -26,7 +26,7 @@ public class AlbumOverviewRepository {
         return albumListData;
     }
 
-    public void upsertAlbum(Album album) {
-        Executors.newSingleThreadExecutor().execute(() -> albumsDao.upsertAlbum(album));
+    public void insertAlbum(Album album) {
+        Executors.newSingleThreadExecutor().execute(() -> albumsDao.insertAlbum(album));
     }
 }

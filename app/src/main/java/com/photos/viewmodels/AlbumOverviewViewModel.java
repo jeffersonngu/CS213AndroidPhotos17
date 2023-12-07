@@ -29,7 +29,7 @@ public class AlbumOverviewViewModel extends ViewModel {
     }
 
     public void addNewAlbum(Album album) {
-        albumOverviewRepository.upsertAlbum(album);
+        albumOverviewRepository.insertAlbum(album);
     }
 
     /* https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#java */

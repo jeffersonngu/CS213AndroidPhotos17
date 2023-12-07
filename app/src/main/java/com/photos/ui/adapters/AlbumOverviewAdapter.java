@@ -18,6 +18,7 @@ import com.photos.models.Photo;
 import com.photos.ui.activities.AlbumOverviewActivity;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdapter.ViewHolder> {
 
@@ -32,7 +33,14 @@ public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdap
 
         @Override
         public boolean areContentsTheSame(@NonNull Album oldAlbum, @NonNull Album newAlbum) {
-            return oldAlbum.equals(newAlbum);
+            List<Photo> oldPhotoList = oldAlbum.getPhotoList();
+            Photo oldLastPhoto = oldPhotoList.isEmpty() ? null : oldPhotoList.get(oldPhotoList.size() - 1);
+
+            List<Photo> newPhotoList = newAlbum.getPhotoList();
+            Photo newLastPhoto = newPhotoList.isEmpty() ? null : newPhotoList.get(newPhotoList.size() - 1);
+
+            return oldAlbum.equals(newAlbum)
+                    && Objects.equals(oldLastPhoto, newLastPhoto);
         }
     });
 
@@ -58,8 +66,10 @@ public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdap
         holder.title.setText(currentAlbum.getName());
         holder.photoCount.setText(String.valueOf(currentAlbum.getPhotoList().size()));
 
-        Photo lastPhoto = currentAlbum.getPhotoList().get(currentAlbum.getPhotoList().size() - 1);
-        holder.thumbnail.setImageURI(lastPhoto.getUri());
+        if (!currentAlbum.getPhotoList().isEmpty()) {
+            Photo lastPhoto = currentAlbum.getPhotoList().get(currentAlbum.getPhotoList().size() - 1);
+            holder.thumbnail.setImageURI(lastPhoto.getUri());
+        }
     }
 
     @Override

@@ -25,7 +25,7 @@ public class AlbumViewerViewModel extends ViewModel {
     }
 
     public void addNewPhoto(Photo photo) {
-        albumViewerRepository.upsertPhoto(photo);
+        albumViewerRepository.insertPhoto(photo);
     }
 
     /* https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#java */

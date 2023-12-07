@@ -17,14 +17,15 @@ public class AlbumViewerRepository {
 
     public AlbumViewerRepository(Application application) {
         AlbumsDatabase albumsDatabase = AlbumsDatabase.getInstance(application);
-        albumsDao = albumsDatabase.albumDao();
+        albumsDao =
+                albumsDatabase.albumDao();
     }
 
     public LiveData<Album> getAlbum(int albumId) {
         return albumsDao.getAlbum(albumId);
     }
 
-    public void upsertPhoto(Photo photo) {
-        Executors.newSingleThreadExecutor().execute(() -> albumsDao.upsertPhoto(photo));
+    public void insertPhoto(Photo photo) {
+        Executors.newSingleThreadExecutor().execute(() -> albumsDao.insertPhoto(photo));
     }
 }

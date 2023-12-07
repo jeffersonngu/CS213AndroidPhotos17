@@ -21,51 +21,39 @@ import java.util.List;
 public abstract class AlbumsDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    public abstract long insertAlbumInfo(Album.AlbumInfo albumInfo);
+    public abstract void insertAlbumInfo(Album.AlbumInfo albumInfo);
 
     @Update
     public abstract void updateAlbumInfo(Album.AlbumInfo albumInfo);
-
-    @Transaction
-    public void upsertAlbumInfo(Album.AlbumInfo albumInfo) {
-        if (insertAlbumInfo(albumInfo) == -1) {
-            updateAlbumInfo(albumInfo);
-        }
-    }
 
     @Delete
     public abstract void deleteAlbumInfo(Album.AlbumInfo albumInfo);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    public abstract long insertPhoto(Photo photo);
+    public abstract void insertPhoto(Photo photo);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    public abstract void insertPhotoList(List<Photo> photoList);
 
     @Update
     public abstract void updatePhoto(Photo photo);
 
-    @Transaction
-    public void upsertPhoto(Photo photo) {
-        if (insertPhoto(photo) == -1) {
-            updatePhoto(photo);
-        }
-    }
-
-    @Transaction
-    public void upsertPhotoList(List<Photo> photoList) {
-        photoList.forEach(this::upsertPhoto);
-    }
+    @Update
+    public abstract void updatePhotoList(List<Photo> photoList);
 
     @Delete
     public abstract void deletePhoto(Photo photo);
 
     @Transaction
-    public void upsertAlbum(Album album) {
-        upsertAlbumInfo(album.getAlbumInfo());
-        upsertPhotoList(album.getPhotoList());
+    public void insertAlbum(Album album) {
+        insertAlbumInfo(album.getAlbumInfo());
+        insertPhotoList(album.getPhotoList());
     }
 
     @Transaction
-    public void upsertAlbumList(List<Album> albumList) {
-        albumList.forEach(this::upsertAlbum);
+    public void updateAlbum(Album album) {
+        updateAlbumInfo(album.getAlbumInfo());
+        updatePhotoList(album.getPhotoList());
     }
 
     @Transaction
