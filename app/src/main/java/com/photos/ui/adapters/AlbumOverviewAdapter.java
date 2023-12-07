@@ -67,6 +67,8 @@ public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.thumbnail.setImageResource(R.drawable.no_image_icon); /* Interestingly, if a holder was deleted, then a new one is added it is not properly "wiped" before recycled */
+
         Album currentAlbum = mDiffer.getCurrentList().get(position);
 
         holder.title.setText(currentAlbum.getName());

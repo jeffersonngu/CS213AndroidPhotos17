@@ -1,5 +1,7 @@
 package com.photos.database;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -13,6 +15,7 @@ import com.photos.models.Album;
 import com.photos.models.Photo;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -56,7 +59,20 @@ public abstract class AlbumsDao {
     private void deletePhotoFile(Photo photo) {
         File file = new File(Objects.requireNonNull(photo.getUri().getPath()));
         if (file.exists()) {
-            file.delete();
+            try {
+                File resolvedFile = file.getCanonicalFile();
+                if (resolvedFile.exists()) {
+                    resolvedFile.delete();
+                }
+            } catch (IOException e) {
+                Log.w("AlbumsDataBase", "Cannot resolve file for deletion");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            if (file.exists()) { /* Chance that we may have deleted the file with resolvedFile already */
+                file.delete();
+            }
         }
     }
 

@@ -54,7 +54,6 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         getMenuInflater().inflate(R.menu.cm_albumoverview, menu);
-
     }
 
     @Override
@@ -64,9 +63,10 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
             renameAlbumDialog(adapter.getLastLongClickAlbum());
             return true;
         } else if (id == R.id.cm_albumoverview_delete) {
+            removeAlbumDialog(adapter.getLastLongClickAlbum());
             return true;
         }
-        return false;
+        return super.onContextItemSelected(item);
     }
 
     private void addAlbumDialog() {
@@ -86,6 +86,7 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
 
     public void renameAlbumDialog(Album album) {
         EditText editText = new EditText(this);
+        editText.setText(album.getName());
         new AlertDialog.Builder(this)
                 .setTitle("Rename Album")
                 .setMessage("Album Name")
@@ -93,6 +94,18 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
                 .setPositiveButton("Submit", (dialogInterface, which) -> {
                     String input = editText.getText().toString();
                     albumOverviewViewModel.renameAlbum(album, input);
+                })
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
+    public void removeAlbumDialog(Album album) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Album?")
+                .setMessage("Are you sure you want to delete album '" + album.getName() + "' and all its photos?")
+                .setPositiveButton("Confirm", (dialogInterface, which) -> {
+                    albumOverviewViewModel.removeAlbum(album);
                 })
                 .setNegativeButton("Cancel", null)
                 .create()
