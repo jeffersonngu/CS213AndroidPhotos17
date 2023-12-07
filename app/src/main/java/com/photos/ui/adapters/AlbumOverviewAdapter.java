@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.photos.R;
 import com.photos.models.Album;
+import com.photos.models.Photo;
 import com.photos.ui.activities.AlbumOverviewActivity;
 
 import java.util.List;
@@ -56,6 +57,9 @@ public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdap
 
         holder.title.setText(currentAlbum.getName());
         holder.photoCount.setText(String.valueOf(currentAlbum.getPhotoList().size()));
+
+        Photo lastPhoto = currentAlbum.getPhotoList().get(currentAlbum.getPhotoList().size() - 1);
+        holder.thumbnail.setImageURI(lastPhoto.getUri());
     }
 
     @Override
