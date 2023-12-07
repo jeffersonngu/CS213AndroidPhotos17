@@ -8,4 +8,5 @@
     <string name="albumviewer_addfromgallery">Add From Gallery</string>
     <string name="albumviewer_addfromfile">Add From File</string>
     <string name="albumviewer_addfromurl">Add From URL</string>
+    <string name="albumviewer_nulluri">Could not find selected photo</string>
 </resources>

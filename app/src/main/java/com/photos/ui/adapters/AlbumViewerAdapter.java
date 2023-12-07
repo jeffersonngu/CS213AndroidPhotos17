@@ -51,6 +51,7 @@ public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Photo currentPhoto = mDiffer.getCurrentList().get(position);
+        holder.thumbnail.setImageURI(currentPhoto.getUri());
     }
 
     @Override
@@ -66,7 +67,7 @@ public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.
             super(view);
             view.setOnClickListener(this);
 
-            thumbnail = view.findViewById(R.id.iv_album_thumbnail);
+            thumbnail = view.findViewById(R.id.iv_photo_thumbnail);
         }
 
         @Override

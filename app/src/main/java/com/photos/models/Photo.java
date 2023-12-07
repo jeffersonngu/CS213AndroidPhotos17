@@ -3,6 +3,7 @@ package com.photos.models;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -26,6 +27,7 @@ public class Photo {
     private int id;
 
     @NonNull
+    @ColumnInfo
     private final Uri uri;
 
     @ColumnInfo
@@ -34,6 +36,7 @@ public class Photo {
     /**
      * Location tag type
      */
+    @Nullable
     @ColumnInfo
     private String location;
 
@@ -54,7 +57,7 @@ public class Photo {
         this.people = new ArrayList<>();
     }
 
-    public Photo(int id, @NonNull Uri uri, String location, List<String> people, int albumId) {
+    public Photo(int id, @NonNull Uri uri, @Nullable String location, List<String> people, int albumId) {
         this.id = id;
         this.uri = uri;
         this.location = location;
@@ -75,6 +78,7 @@ public class Photo {
      */
     public int getAlbumId() { return albumId; }
 
+    @Nullable
     public String getLocation() { return location; }
 
     public List<String> getPeople() { return people; }

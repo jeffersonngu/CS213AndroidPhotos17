@@ -6,6 +6,7 @@ import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
@@ -86,13 +87,17 @@ public class AlbumViewerActivity extends AppCompatActivity implements PopupMenu.
     }
 
     public void savePhoto(Uri uri) {
+        if (uri == null) {
+            Toast.makeText(this, R.string.albumviewer_nulluri, Toast.LENGTH_SHORT).show();
+            return;
+        }
         /* Copy the photo locally */
         String fileName = PhotoFileUtil.getFileName(this, uri);
         Pair<String, File> destFile = PhotoFileUtil.getDest(this, fileName);
         PhotoFileUtil.copyFileToLocal(this, uri, destFile.first);
 
         /* Store in database */
-        Uri destUri = Uri.parse(destFile.second.toURI().toString());
+        Uri destUri = Uri.fromFile(destFile.second);
         Photo photo = new Photo(destUri, albumId);
         albumViewerViewModel.addNewPhoto(photo);
     }
