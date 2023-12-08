@@ -36,9 +36,6 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
         setContentView(R.layout.activity_albumoverview);
         RecyclerView recyclerView = findViewById(R.id.rv_albumoverview);
 
-        albumOverviewViewModel.addNewAlbum(new Album("Meep")); // Test
-        albumOverviewViewModel.addNewAlbum(new Album("Moop")); // Test
-
         adapter = new AlbumOverviewAdapter(this, albumOverviewViewModel.getAlbumListLiveData().getValue());
         recyclerView.setAdapter(adapter);
 
