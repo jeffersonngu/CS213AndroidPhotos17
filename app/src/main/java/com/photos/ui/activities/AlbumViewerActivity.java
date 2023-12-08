@@ -1,5 +1,6 @@
 package com.photos.ui.activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Pair;
@@ -28,7 +29,7 @@ import com.photos.viewmodels.AlbumViewerViewModel;
 
 import java.io.File;
 
-public class AlbumViewerActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewerListener, PopupMenu.OnMenuItemClickListener {
 
     private AlbumViewerAdapter adapter;
     private AlbumViewerViewModel albumViewerViewModel;
@@ -54,7 +55,7 @@ public class AlbumViewerActivity extends AppCompatActivity implements PopupMenu.
         setContentView(R.layout.activity_albumviewer);
         RecyclerView recyclerView = findViewById(R.id.rv_albumviewer);
 
-        LiveData<Album> albumLiveData = albumViewerViewModel.getAlbum(albumId);
+        LiveData<Album> albumLiveData = albumViewerViewModel.getAlbumLiveData(albumId);
 
         adapter = new AlbumViewerAdapter(this, albumLiveData.getValue());
         recyclerView.setAdapter(adapter);
@@ -131,5 +132,12 @@ public class AlbumViewerActivity extends AppCompatActivity implements PopupMenu.
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();
+    }
+
+    public void viewImage(int entryPosition) {
+        Intent intent = new Intent(this, ImageViewerActivity.class);
+        intent.putExtra("albumId", albumId);
+        intent.putExtra("entryPosition", entryPosition);
+        this.startActivity(intent);
     }
 }

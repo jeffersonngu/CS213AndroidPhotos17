@@ -21,7 +21,7 @@ public class AlbumViewerRepository {
                 albumsDatabase.albumDao();
     }
 
-    public LiveData<Album> getAlbum(int albumId) {
+    public LiveData<Album> getAlbumData(int albumId) {
         return albumsDao.getAlbum(albumId);
     }
 

@@ -1,6 +1,5 @@
 package com.photos.ui.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.photos.R;
 import com.photos.models.Album;
 import com.photos.models.Photo;
+import com.photos.ui.activities.AlbumViewerListener;
 
 public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.ViewHolder> {
 
-    private final Context context;
+    private final AlbumViewerListener listener;
 
     /* Same as from AlbumOverviewAdapter */
     private int lastLongClickPosition;
@@ -32,12 +32,12 @@ public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.
         @Override
         public boolean areContentsTheSame(@NonNull Photo oldPhoto, @NonNull Photo newPhoto) {
             return oldPhoto.equals(newPhoto)
-                    && oldPhoto.getAlbumId() == newPhoto.getId();
+                    && oldPhoto.getAlbumId() == newPhoto.getAlbumId();
         }
     });
 
-    public AlbumViewerAdapter(Context context, Album album) {
-        this.context = context;
+    public AlbumViewerAdapter(AlbumViewerListener listener, Album album) {
+        this.listener = listener;
         setAlbum(album);
     }
 
@@ -87,7 +87,7 @@ public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.
 
         @Override
         public void onClick(View v) {
-
+            listener.viewImage(getLayoutPosition());
         }
     }
 }

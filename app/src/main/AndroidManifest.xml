@@ -29,5 +29,11 @@
             android:exported="true"
             android:theme="@style/Theme.Photos">
         </activity>
+
+        <activity
+            android:name=".ui.activities.ImageViewerActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Photos">
+        </activity>
     </application>
 </manifest>

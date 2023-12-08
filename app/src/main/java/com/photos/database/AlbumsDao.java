@@ -92,4 +92,7 @@ public abstract class AlbumsDao {
     @Transaction
     @Query("SELECT * FROM albums WHERE id = :albumId")
     public abstract LiveData<Album> getAlbum(int albumId);
+
+    @Query("SELECT * FROM photos WHERE albumId = :albumId")
+    public abstract LiveData<List<Photo>> getPhotoList(int albumId);
 }

@@ -14,16 +14,14 @@ import java.util.concurrent.Executors;
 public class AlbumOverviewRepository {
 
     private final AlbumsDao albumsDao;
-    private final LiveData<List<Album>> albumListData;
 
     public AlbumOverviewRepository(Application application) {
         AlbumsDatabase albumsDatabase = AlbumsDatabase.getInstance(application);
         albumsDao = albumsDatabase.albumDao();
-        albumListData = albumsDao.getAllAlbums();
     }
 
     public LiveData<List<Album>> getAlbumListData() {
-        return albumListData;
+        return albumsDao.getAllAlbums();
     }
 
     public void insertAlbum(Album album) {
