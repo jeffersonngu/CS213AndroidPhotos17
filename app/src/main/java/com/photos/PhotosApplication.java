@@ -7,11 +7,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.photos.database.AlbumsDatabase;
+
 public class PhotosApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        AlbumsDatabase.getInstance(this).albumDao().setContext(this); /* Pass the context to Dao */
 
         registerCallbacks();
     }

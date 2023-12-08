@@ -1,6 +1,6 @@
 package com.photos.database;
 
-import android.util.Log;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -13,17 +13,25 @@ import androidx.room.Update;
 
 import com.photos.models.Album;
 import com.photos.models.Photo;
+import com.photos.util.PhotoFileUtil;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Handles our Inserts and Transactions
  */
 @Dao
 public abstract class AlbumsDao {
+
+    private Context context;
+
+    /**
+     * Pass a context to help with Transactions
+     * @param context Any context, preferably the Application's Context
+     */
+    public void setContext(Context context) {
+        this.context = context;
+    }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract void insertAlbumInfo(Album.AlbumInfo albumInfo);
@@ -55,25 +63,8 @@ public abstract class AlbumsDao {
     @Query("UPDATE albums SET name = :newName WHERE id = :albumId")
     public abstract void renameAlbum(int albumId, String newName);
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void deletePhotoFile(Photo photo) {
-        File file = new File(Objects.requireNonNull(photo.getUri().getPath()));
-        if (file.exists()) {
-            try {
-                File resolvedFile = file.getCanonicalFile();
-                if (resolvedFile.exists()) {
-                    resolvedFile.delete();
-                }
-            } catch (IOException e) {
-                Log.w("AlbumsDataBase", "Cannot resolve file for deletion");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
-            if (file.exists()) { /* Chance that we may have deleted the file with resolvedFile already */
-                file.delete();
-            }
-        }
+        context.deleteFile(PhotoFileUtil.getFileName(context, photo.getUri()));
     }
 
     @Delete

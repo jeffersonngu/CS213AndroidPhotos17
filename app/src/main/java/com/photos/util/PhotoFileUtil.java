@@ -9,6 +9,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Help copy (photo) files from one source to destination.
@@ -18,11 +19,15 @@ import java.io.IOException;
 public class PhotoFileUtil {
 
     public static String getFileName(Context context, Uri uri) {
-        try (var returnCursor = context.getContentResolver().query(uri, null, null, null, null)) {
-            assert returnCursor != null;
-            int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-            returnCursor.moveToFirst();
-            return returnCursor.getString(nameIndex);
+        if (Objects.equals(uri.getScheme(), "content")) { /* Resolve potential symlinks */
+            try (var returnCursor = context.getContentResolver().query(uri, null, null, null, null)) {
+                assert returnCursor != null;
+                int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                returnCursor.moveToFirst();
+                return returnCursor.getString(nameIndex);
+            }
+        } else {
+            return uri.getLastPathSegment();
         }
     }
 

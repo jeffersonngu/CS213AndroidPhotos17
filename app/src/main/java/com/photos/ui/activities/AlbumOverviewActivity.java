@@ -42,12 +42,12 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
         adapter = new AlbumOverviewAdapter(this, albumOverviewViewModel.getAlbumListLiveData().getValue());
         recyclerView.setAdapter(adapter);
 
+        registerForContextMenu(recyclerView);
+
         albumOverviewViewModel.getAlbumListLiveData().observe(this, albums -> adapter.setAlbumList(albums));
 
         Button addAlbumButton = findViewById(R.id.btn_albumoverview_add);
         addAlbumButton.setOnClickListener(l -> addAlbumDialog());
-
-        registerForContextMenu(recyclerView);
     }
 
     @Override
@@ -104,9 +104,7 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
         new AlertDialog.Builder(this)
                 .setTitle("Delete Album?")
                 .setMessage("Are you sure you want to delete album '" + album.getName() + "' and all its photos?")
-                .setPositiveButton("Confirm", (dialogInterface, which) -> {
-                    albumOverviewViewModel.removeAlbum(album);
-                })
+                .setPositiveButton("Confirm", (dialogInterface, which) -> albumOverviewViewModel.removeAlbum(album))
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();

@@ -19,6 +19,9 @@ public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.
 
     private final Context context;
 
+    /* Same as from AlbumOverviewAdapter */
+    private int lastLongClickPosition;
+
     /* https://developer.android.com/reference/android/support/v7/recyclerview/extensions/AsyncListDiffer.html */
     private final AsyncListDiffer<Photo> mDiffer = new AsyncListDiffer<>(this, new DiffUtil.ItemCallback<>() {
         @Override
@@ -50,6 +53,8 @@ public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.thumbnail.setImageResource(R.drawable.no_image_icon);
+
         Photo currentPhoto = mDiffer.getCurrentList().get(position);
         holder.thumbnail.setImageURI(currentPhoto.getUri());
     }
@@ -59,6 +64,10 @@ public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.
         return mDiffer.getCurrentList().size();
     }
 
+    public Photo getLastLongClickPhoto() {
+        return mDiffer.getCurrentList().get(lastLongClickPosition);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView thumbnail;
@@ -66,8 +75,14 @@ public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.
         public ViewHolder(@NonNull View view) {
             super(view);
             view.setOnClickListener(this);
+            view.setOnLongClickListener(null);
 
             thumbnail = view.findViewById(R.id.iv_photo_thumbnail);
+
+            view.setOnLongClickListener(tempView -> {
+                lastLongClickPosition = getLayoutPosition();
+                return false;
+            });
         }
 
         @Override

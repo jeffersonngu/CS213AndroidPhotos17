@@ -3,6 +3,7 @@ package com.photos.ui.activities;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -56,6 +59,8 @@ public class AlbumViewerActivity extends AppCompatActivity implements PopupMenu.
         adapter = new AlbumViewerAdapter(this, albumLiveData.getValue());
         recyclerView.setAdapter(adapter);
 
+        registerForContextMenu(recyclerView);
+
         albumLiveData.observe(this, album -> adapter.setAlbum(album));
 
         findViewById(R.id.btn_albumviewer_add).setOnClickListener(this::showMenu);
@@ -100,5 +105,31 @@ public class AlbumViewerActivity extends AppCompatActivity implements PopupMenu.
         Uri destUri = Uri.fromFile(destFile.second);
         Photo photo = new Photo(destUri, albumId);
         albumViewerViewModel.addNewPhoto(photo);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.cm_albumviewer, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.cm_albumviewer_delete) {
+            removePhotoDialog(adapter.getLastLongClickPhoto());
+            return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    public void removePhotoDialog(Photo photo) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Photo?")
+                .setMessage("Are you sure you want to delete photo '" + PhotoFileUtil.getFileName(this, photo.getUri()) + "'?")
+                .setPositiveButton("Confirm", (dialogInterface, which) -> albumViewerViewModel.removePhoto(photo))
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
     }
 }
