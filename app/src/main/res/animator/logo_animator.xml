@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="1000">
+    android:duration="2500">
 
     <propertyValuesHolder
         android:propertyName="rotation"
@@ -19,5 +19,10 @@
         android:valueType="floatType"
         android:valueFrom="0.0f"
         android:valueTo="0.5f" />
+
+    <propertyValuesHolder
+        android:propertyName="translateX"
+        android:valueFrom="-3dp"
+        android:valueTo="0dp" />
 
 </objectAnimator>
