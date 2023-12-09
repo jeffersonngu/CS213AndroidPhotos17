@@ -1,6 +1,7 @@
 package com.photos.viewmodels;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,12 +29,14 @@ public class AlbumOverviewViewModel extends ViewModel {
         return albumListLiveData;
     }
 
-    public void addNewAlbum(Album album) {
-        albumOverviewRepository.insertAlbum(album);
+    @Nullable
+    public Boolean addNewAlbum(Album album) {
+        return albumOverviewRepository.insertAlbum(album);
     }
 
-    public void renameAlbum(Album album, String newName) {
-        albumOverviewRepository.renameAlbum(album, newName);
+    @Nullable
+    public Boolean renameAlbum(Album album, String newName) {
+        return albumOverviewRepository.renameAlbum(album, newName);
     }
 
     public void removeAlbum(Album album) {

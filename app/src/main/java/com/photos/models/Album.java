@@ -1,6 +1,7 @@
 package com.photos.models;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -34,10 +35,6 @@ public class Album {
         return albumInfo.name;
     }
 
-    public void rename(String newName) {
-        albumInfo.name = newName;
-    }
-
     public List<Photo> getPhotoList() {
         return photoList;
     }
@@ -69,6 +66,7 @@ public class Album {
         private int id;
 
         @NonNull
+        @ColumnInfo(collate = ColumnInfo.NOCASE)
         private String name;
 
         @Ignore

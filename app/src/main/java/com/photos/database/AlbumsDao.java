@@ -13,8 +13,9 @@ import androidx.room.Update;
 
 import com.photos.models.Album;
 import com.photos.models.Photo;
-import com.photos.util.PhotoFileUtil;
+import com.photos.util.PhotosFileUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public abstract class AlbumsDao {
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    public abstract void insertAlbumInfo(Album.AlbumInfo albumInfo);
+    public abstract long insertAlbumInfo(Album.AlbumInfo albumInfo);
 
     @Update
     public abstract void updateAlbumInfo(Album.AlbumInfo albumInfo);
@@ -43,15 +44,17 @@ public abstract class AlbumsDao {
     public abstract void insertPhoto(Photo photo);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    public abstract void insertPhotoList(List<Photo> photoList);
+    public abstract long[] insertPhotoList(List<Photo> photoList);
 
     @Update
     public abstract void updatePhotoList(List<Photo> photoList);
 
     @Transaction
-    public void insertAlbum(Album album) {
-        insertAlbumInfo(album.getAlbumInfo());
-        insertPhotoList(album.getPhotoList());
+    public boolean insertAlbum(Album album) {
+        boolean insertAlbumInfo = !(insertAlbumInfo(album.getAlbumInfo()) < 0);
+        boolean insertPhotoList = Arrays.stream(insertPhotoList(album.getPhotoList()))
+                .noneMatch(value -> value < 0);
+        return insertAlbumInfo && insertPhotoList;
     }
 
     @Transaction
@@ -60,11 +63,11 @@ public abstract class AlbumsDao {
         updatePhotoList(album.getPhotoList());
     }
 
-    @Query("UPDATE albums SET name = :newName WHERE id = :albumId")
-    public abstract void renameAlbum(int albumId, String newName);
+    @Query("UPDATE albums SET name = :newName WHERE id = :albumId AND NOT EXISTS (SELECT 1 FROM albums WHERE name = :newName AND id != :albumId)")
+    public abstract int renameAlbum(int albumId, String newName);
 
     private void deletePhotoFile(Photo photo) {
-        context.deleteFile(PhotoFileUtil.getFileName(context, photo.getUri()));
+        context.deleteFile(PhotosFileUtils.getFileName(context, photo.getUri()));
     }
 
     @Delete

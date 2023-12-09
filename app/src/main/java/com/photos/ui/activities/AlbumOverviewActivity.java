@@ -2,6 +2,7 @@ package com.photos.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.photos.R;
 import com.photos.models.Album;
 import com.photos.ui.adapters.AlbumOverviewAdapter;
+import com.photos.util.PhotosViewUtils;
 import com.photos.viewmodels.AlbumOverviewViewModel;
 
 public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOverviewListener {
@@ -68,33 +70,65 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
 
     private void addAlbumDialog() {
         EditText editText = new EditText(this);
-        new AlertDialog.Builder(this)
+        editText.setMaxLines(1);
+        PhotosViewUtils.addEditTextFilter(editText, new InputFilter.LengthFilter(20));
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setTitle("Add Album")
                 .setMessage("Album Name")
                 .setView(editText)
-                .setPositiveButton("Submit", (dialogInterface, which) -> {
-                    String input = editText.getText().toString();
-                    albumOverviewViewModel.addNewAlbum(new Album(input));
-                })
+                .setPositiveButton("Submit", null)
                 .setNegativeButton("Cancel", null)
-                .create()
-                .show();
+                .create();
+        alertDialog.show();
+
+        /* Custom handler for Submit */
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String input = editText.getText().toString();
+            if (input.matches("^[a-zA-Z0-9]*")) {
+                Boolean result = albumOverviewViewModel.addNewAlbum(new Album(input));
+                if (result == null) {
+                    alertDialog.setMessage("Timed Out: The Album may or may not have been created");
+                } else if (!result) {
+                    alertDialog.setMessage("That Album name already exists");
+                } else {
+                    alertDialog.dismiss();
+                }
+            } else {
+                alertDialog.setMessage("Only alphanumeric (letters and numbers no whitespaces) names allowed");
+            }
+        });
     }
 
     public void renameAlbumDialog(Album album) {
         EditText editText = new EditText(this);
         editText.setText(album.getName());
-        new AlertDialog.Builder(this)
+        editText.setMaxLines(1);
+        PhotosViewUtils.addEditTextFilter(editText, new InputFilter.LengthFilter(20));
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setTitle("Rename Album")
                 .setMessage("Album Name")
                 .setView(editText)
-                .setPositiveButton("Submit", (dialogInterface, which) -> {
-                    String input = editText.getText().toString();
-                    albumOverviewViewModel.renameAlbum(album, input);
-                })
+                .setPositiveButton("Submit", null)
                 .setNegativeButton("Cancel", null)
-                .create()
-                .show();
+                .create();
+        alertDialog.show();
+
+        /* Custom handler for Submit */
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String input = editText.getText().toString();
+            if (input.matches("^[a-zA-Z0-9]*")) {
+                Boolean result = albumOverviewViewModel.renameAlbum(album, input);
+                if (result == null) {
+                    alertDialog.setMessage("Timed Out: The Album may or may not have been renamed");
+                } else if (!result) {
+                    alertDialog.setMessage("That Album name already exists");
+                } else {
+                    alertDialog.dismiss();
+                }
+            } else {
+                alertDialog.setMessage("Only alphanumeric (letters and numbers no whitespaces) names allowed");
+            }
+        });
     }
 
     public void removeAlbumDialog(Album album) {

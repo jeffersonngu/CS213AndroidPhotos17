@@ -16,7 +16,7 @@ import java.util.Objects;
  * Modified from
  * <a href="https://androidfortechs.blogspot.com/2020/12/how-to-convert-uri-to-file-android-10.html">An AndroidForTechs blog</a>.
  */
-public class PhotoFileUtil {
+public class PhotosFileUtils {
 
     public static String getFileName(Context context, Uri uri) {
         if (Objects.equals(uri.getScheme(), "content")) { /* Resolve potential symlinks */

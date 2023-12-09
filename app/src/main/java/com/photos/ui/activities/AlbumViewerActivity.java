@@ -24,7 +24,7 @@ import com.photos.R;
 import com.photos.models.Album;
 import com.photos.models.Photo;
 import com.photos.ui.adapters.AlbumViewerAdapter;
-import com.photos.util.PhotoFileUtil;
+import com.photos.util.PhotosFileUtils;
 import com.photos.viewmodels.AlbumViewerViewModel;
 
 import java.io.File;
@@ -98,9 +98,9 @@ public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewe
             return;
         }
         /* Copy the photo locally */
-        String fileName = PhotoFileUtil.getFileName(this, uri);
-        Pair<String, File> destFile = PhotoFileUtil.getDest(this, fileName);
-        PhotoFileUtil.copyFileToLocal(this, uri, destFile.first);
+        String fileName = PhotosFileUtils.getFileName(this, uri);
+        Pair<String, File> destFile = PhotosFileUtils.getDest(this, fileName);
+        PhotosFileUtils.copyFileToLocal(this, uri, destFile.first);
 
         /* Store in database */
         Uri destUri = Uri.fromFile(destFile.second);
@@ -127,7 +127,7 @@ public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewe
     public void removePhotoDialog(Photo photo) {
         new AlertDialog.Builder(this)
                 .setTitle("Delete Photo?")
-                .setMessage("Are you sure you want to delete photo '" + PhotoFileUtil.getFileName(this, photo.getUri()) + "'?")
+                .setMessage("Are you sure you want to delete photo '" + PhotosFileUtils.getFileName(this, photo.getUri()) + "'?")
                 .setPositiveButton("Confirm", (dialogInterface, which) -> albumViewerViewModel.removePhoto(photo))
                 .setNegativeButton("Cancel", null)
                 .create()

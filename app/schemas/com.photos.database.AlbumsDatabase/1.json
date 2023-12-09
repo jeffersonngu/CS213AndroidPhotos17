@@ -6,7 +6,7 @@
     "entities": [
       {
         "tableName": "albums",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL COLLATE NOCASE)",
         "fields": [
           {
             "fieldPath": "id",
@@ -42,7 +42,7 @@
       },
       {
         "tableName": "photos",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uri` TEXT NOT NULL, `location` TEXT, `people` TEXT, `albumId` INTEGER NOT NULL, FOREIGN KEY(`albumId`) REFERENCES `albums`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uri` TEXT NOT NULL, `albumId` INTEGER NOT NULL, `location` TEXT, `people` TEXT, FOREIGN KEY(`albumId`) REFERENCES `albums`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -57,6 +57,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "albumId",
+            "columnName": "albumId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "location",
             "columnName": "location",
             "affinity": "TEXT",
@@ -67,12 +73,6 @@
             "columnName": "people",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "albumId",
-            "columnName": "albumId",
-            "affinity": "INTEGER",
-            "notNull": true
           }
         ],
         "primaryKey": {
