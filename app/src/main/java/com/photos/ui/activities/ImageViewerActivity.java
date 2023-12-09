@@ -2,12 +2,12 @@ package com.photos.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,8 +68,6 @@ public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.
         });
 
         AppBarLayout appBarLayout = findViewById(R.id.abl_imageviewer);
-        Button back = findViewById(R.id.btn_imageviewer_back);
-        Button overflowMenu = findViewById(R.id.btn_imageviewer_overflowMenu);
 
         /* Note: Interestingly we must access the internal RecyclerView of viewpager instead */
         viewpager.getChildAt(0).setOnTouchListener((view, event) -> {
@@ -85,7 +83,23 @@ public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.
             return false;
         });
 
+        Button overflowMenu = findViewById(R.id.btn_imageviewer_overflowMenu);
         overflowMenu.setOnClickListener(this::showMenu);
+
+        Button back = findViewById(R.id.btn_imageviewer_back);
+        back.setOnClickListener(v -> finish());
+
+        AtomicBoolean showDetails = new AtomicBoolean(true); /* Currently showing details or not */
+        ImageButton detailsToggle = findViewById(R.id.ibtn_imageviewer_toggleDetails);
+        detailsToggle.setOnClickListener(v -> {
+            if (showDetails.get()) {
+                detailsToggle.setImageResource(R.drawable.show);
+                showDetails.set(false);
+            } else {
+                detailsToggle.setImageResource(R.drawable.hide);
+                showDetails.set(true);
+            }
+        });
     }
 
     public void showMenu(View v) {
@@ -100,7 +114,6 @@ public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.
     public boolean onMenuItemClick(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.popm_imageviewer_modifyLocationTag) {
-            Log.i("Testing", "testing");
             return true;
         } else if (id == R.id.popm_imageviewer_addPersonTag) {
             return true;

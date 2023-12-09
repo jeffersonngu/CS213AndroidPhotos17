@@ -47,7 +47,7 @@
                 android:text="@string/common_menu" />
 
             <ImageButton
-                android:id="@+id/btn_imageviewer_toggleDisplay"
+                android:id="@+id/ibtn_imageviewer_toggleDetails"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
