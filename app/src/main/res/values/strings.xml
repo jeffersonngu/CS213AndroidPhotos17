@@ -11,4 +11,6 @@
     <string name="albumviewer_nulluri">Could not find selected photo</string>
     <string name="common_rename">Rename</string>
     <string name="common_delete">Delete</string>
+    <string name="common_back"><![CDATA[<]]></string>
+    <string name="common_menu">⋮</string>
 </resources>
