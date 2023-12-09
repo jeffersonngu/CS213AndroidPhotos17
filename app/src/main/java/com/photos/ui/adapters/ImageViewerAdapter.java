@@ -58,6 +58,10 @@ public class ImageViewerAdapter extends RecyclerView.Adapter<ImageViewerAdapter.
         return mDiffer.getCurrentList().size();
     }
 
+    public Photo getPhoto(int currentItem) {
+        return mDiffer.getCurrentList().get(currentItem);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView imageView;

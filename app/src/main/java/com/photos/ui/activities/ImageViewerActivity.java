@@ -2,14 +2,17 @@ package com.photos.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +23,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.photos.R;
 import com.photos.models.Photo;
 import com.photos.ui.adapters.ImageViewerAdapter;
+import com.photos.util.PhotosViewUtils;
 import com.photos.viewmodels.ImageViewerViewModel;
 
 import java.util.List;
@@ -32,6 +36,8 @@ public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.
     private ImageViewerViewModel imageViewerViewModel;
 
     private int albumId;
+
+    private ViewPager2 viewpager;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -50,7 +56,7 @@ public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.
         ).get(ImageViewerViewModel.class);
 
         setContentView(R.layout.activity_imageviewer);
-        ViewPager2 viewpager = findViewById(R.id.vp_imageviewer);
+        viewpager = findViewById(R.id.vp_imageviewer);
         viewpager.setPageTransformer(new MarginPageTransformer(50));
 
         LiveData<List<Photo>> photoListLiveData = imageViewerViewModel.getPhotoListLiveData(albumId);
@@ -114,6 +120,7 @@ public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.
     public boolean onMenuItemClick(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.popm_imageviewer_modifyLocationTag) {
+            modifyLocationTagDialog(adapter.getPhoto(viewpager.getCurrentItem()));
             return true;
         } else if (id == R.id.popm_imageviewer_addPersonTag) {
             return true;
@@ -121,5 +128,25 @@ public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.
             return true;
         }
         return false;
+    }
+
+    public void modifyLocationTagDialog(Photo photo) {
+        EditText editText = new EditText(this);
+        editText.setMaxLines(1);
+        PhotosViewUtils.addEditTextFilter(editText, new InputFilter.LengthFilter(20));
+        new AlertDialog.Builder(this)
+                .setTitle("Modify Location Tag")
+                .setMessage("Set a new location")
+                .setView(editText)
+                .setPositiveButton("Submit", (dialogInterface, which) -> imageViewerViewModel.photoSetLocation(photo, editText.getText().toString()))
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        imageViewerViewModel.onDestroy();
     }
 }

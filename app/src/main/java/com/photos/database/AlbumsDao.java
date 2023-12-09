@@ -66,6 +66,30 @@ public abstract class AlbumsDao {
     @Query("UPDATE albums SET name = :newName WHERE id = :albumId AND NOT EXISTS (SELECT 1 FROM albums WHERE name = :newName AND id != :albumId)")
     public abstract int renameAlbum(int albumId, String newName);
 
+    @Query("UPDATE photos SET location = :newLocation WHERE id = :photoId")
+    public abstract void photoSetLocation(int photoId, String newLocation);
+
+    /* Helper Method for photoPeopleListAdd/Remove */
+    @Query("SELECT people FROM photos WHERE id = :photoId")
+    abstract List<String> getPhotoPeopleList(int photoId);
+
+    @Transaction
+    public void photoPeopleListAdd(int photoId, String newPerson) {
+        List<String> people = getPhotoPeopleList(photoId);
+        people.add(newPerson);
+    }
+
+    /**
+     * Should only be called when certain that person exists
+     * @param photoId ID of Photo
+     * @param person Person to remove
+     */
+    @Transaction
+    public void photoPeopleListRemove(int photoId, String person) {
+        List<String> people = getPhotoPeopleList(photoId);
+        people.remove(person);
+    }
+
     private void deletePhotoFile(Photo photo) {
         context.deleteFile(PhotosFileUtils.getFileName(context, photo.getUri()));
     }

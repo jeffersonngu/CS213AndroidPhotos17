@@ -14,6 +14,16 @@ import java.util.List;
 
 public class ImageViewerViewModel extends ViewModel {
 
+    /* https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#java */
+    public static final ViewModelInitializer<ImageViewerViewModel> INITIALIZER = new ViewModelInitializer<>(
+            ImageViewerViewModel.class,
+            creationExtras -> {
+                PhotosApplication app = (PhotosApplication) creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY);
+                assert app != null;
+                return new ImageViewerViewModel(new ImageViewerRepository(app));
+            }
+    );
+
     @NonNull
     private final ImageViewerRepository imageViewerRepository;
 
@@ -25,13 +35,19 @@ public class ImageViewerViewModel extends ViewModel {
         return imageViewerRepository.getPhotoListData(albumId);
     }
 
-    /* https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#java */
-    public static final ViewModelInitializer<ImageViewerViewModel> INITIALIZER = new ViewModelInitializer<>(
-            ImageViewerViewModel.class,
-            creationExtras -> {
-                PhotosApplication app = (PhotosApplication) creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY);
-                assert app != null;
-                return new ImageViewerViewModel(new ImageViewerRepository(app));
-            }
-    );
+    public void photoSetLocation(Photo photo, String newLocation) {
+        imageViewerRepository.photoSetLocation(photo.getId(), newLocation);
+    }
+
+    public void photoAddPerson(Photo photo, String newPerson) {
+        imageViewerRepository.photoPeopleListAdd(photo.getId(), newPerson);
+    }
+
+    public void photoRemovePerson(Photo photo, String person) {
+        imageViewerRepository.photoPeopleListRemove(photo, person);
+    }
+
+    public void onDestroy() {
+        imageViewerRepository.onDestroy();
+    }
 }
