@@ -140,4 +140,10 @@ public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewe
         intent.putExtra("entryPosition", entryPosition);
         this.startActivity(intent);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        albumViewerViewModel.onDestroy();
+    }
 }

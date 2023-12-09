@@ -146,4 +146,10 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
         intent.putExtra("albumId", album.getAlbumInfo().getId());
         this.startActivity(intent);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        albumOverviewViewModel.onDestroy();
+    }
 }

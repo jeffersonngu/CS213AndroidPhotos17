@@ -13,6 +13,16 @@ import com.photos.repository.AlbumViewerRepository;
 
 public class AlbumViewerViewModel extends ViewModel {
 
+    /* https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#java */
+    public static final ViewModelInitializer<AlbumViewerViewModel> INITIALIZER = new ViewModelInitializer<>(
+            AlbumViewerViewModel.class,
+            creationExtras -> {
+                PhotosApplication app = (PhotosApplication) creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY);
+                assert app != null;
+                return new AlbumViewerViewModel(new AlbumViewerRepository(app));
+            }
+    );
+
     @NonNull
     private final AlbumViewerRepository albumViewerRepository;
 
@@ -32,13 +42,7 @@ public class AlbumViewerViewModel extends ViewModel {
         albumViewerRepository.deletePhoto(photo);
     }
 
-    /* https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#java */
-    public static final ViewModelInitializer<AlbumViewerViewModel> INITIALIZER = new ViewModelInitializer<>(
-        AlbumViewerViewModel.class,
-        creationExtras -> {
-            PhotosApplication app = (PhotosApplication) creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY);
-            assert app != null;
-            return new AlbumViewerViewModel(new AlbumViewerRepository(app));
-        }
-    );
+    public void onDestroy() {
+        albumViewerRepository.onDestroy();
+    }
 }

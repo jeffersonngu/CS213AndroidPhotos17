@@ -9,10 +9,12 @@ import com.photos.database.AlbumsDatabase;
 import com.photos.models.Album;
 import com.photos.models.Photo;
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class AlbumViewerRepository {
 
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final AlbumsDao albumsDao;
 
     public AlbumViewerRepository(Application application) {
@@ -26,10 +28,14 @@ public class AlbumViewerRepository {
     }
 
     public void insertPhoto(Photo photo) {
-        Executors.newSingleThreadExecutor().execute(() -> albumsDao.insertPhoto(photo));
+        executorService.execute(() -> albumsDao.insertPhoto(photo));
     }
 
     public void deletePhoto(Photo photo) {
-        Executors.newSingleThreadExecutor().execute(() -> albumsDao.deletePhoto(photo));
+        executorService.execute(() -> albumsDao.deletePhoto(photo));
+    }
+
+    public void onDestroy() {
+        executorService.shutdown();
     }
 }

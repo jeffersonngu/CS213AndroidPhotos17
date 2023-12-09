@@ -20,6 +20,7 @@ import java.util.concurrent.TimeoutException;
 
 public class AlbumOverviewRepository {
 
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final AlbumsDao albumsDao;
 
     public AlbumOverviewRepository(Application application) {
@@ -33,10 +34,7 @@ public class AlbumOverviewRepository {
 
     @Nullable
     public Boolean insertAlbum(Album album) {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<Boolean> result = executorService.submit(() -> albumsDao.insertAlbum(album));
-        executorService.shutdown();
-
         try {
             return result.get(1000, TimeUnit.MILLISECONDS);
         } catch (TimeoutException e) {
@@ -50,16 +48,12 @@ public class AlbumOverviewRepository {
     }
 
     public void deleteAlbum(Album album) {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> albumsDao.deleteAlbum(album));
-        executorService.shutdown();
     }
 
     @Nullable
     public Boolean renameAlbum(Album album, String newName) {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<Integer> result = executorService.submit(() -> albumsDao.renameAlbum(album.getAlbumInfo().getId(), newName));
-        executorService.shutdown();
         try {
             return result.get(1000, TimeUnit.MILLISECONDS) > 0;
         } catch (TimeoutException e) {
@@ -70,5 +64,9 @@ public class AlbumOverviewRepository {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    public void onDestroy() {
+        executorService.shutdown();
     }
 }

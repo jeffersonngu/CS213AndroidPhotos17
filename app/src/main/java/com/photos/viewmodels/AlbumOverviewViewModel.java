@@ -15,6 +15,16 @@ import java.util.List;
 
 public class AlbumOverviewViewModel extends ViewModel {
 
+    /* https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#java */
+    public static final ViewModelInitializer<AlbumOverviewViewModel> INITIALIZER = new ViewModelInitializer<>(
+            AlbumOverviewViewModel.class,
+            creationExtras -> {
+                PhotosApplication app = (PhotosApplication) creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY);
+                assert app != null;
+                return new AlbumOverviewViewModel(new AlbumOverviewRepository(app));
+            }
+    );
+
     @NonNull
     private final AlbumOverviewRepository albumOverviewRepository;
 
@@ -43,13 +53,7 @@ public class AlbumOverviewViewModel extends ViewModel {
         albumOverviewRepository.deleteAlbum(album);
     }
 
-    /* https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#java */
-    public static final ViewModelInitializer<AlbumOverviewViewModel> INITIALIZER = new ViewModelInitializer<>(
-        AlbumOverviewViewModel.class,
-        creationExtras -> {
-            PhotosApplication app = (PhotosApplication) creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY);
-            assert app != null;
-            return new AlbumOverviewViewModel(new AlbumOverviewRepository(app));
-        }
-    );
+    public void onDestroy() {
+        albumOverviewRepository.onDestroy();
+    }
 }
