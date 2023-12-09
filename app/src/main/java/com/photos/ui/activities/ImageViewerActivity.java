@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.photos.R;
@@ -39,6 +40,7 @@ public class ImageViewerActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_imageviewer);
         ViewPager2 viewpager = findViewById(R.id.vp_imageviewer);
+        viewpager.setPageTransformer(new MarginPageTransformer(50));
 
         LiveData<List<Photo>> photoListLiveData = imageViewerViewModel.getPhotoListLiveData(albumId);
 
