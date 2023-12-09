@@ -19,8 +19,7 @@
         android:layout_height="wrap_content"
         android:alpha="0.7"
         android:background="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tb_imageviewer"
@@ -35,15 +34,29 @@
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_gravity="start"
+                android:background="@null"
                 android:text="@string/common_back" />
 
             <Button
-                android:id="@+id/btn_imageviewer_delete"
+                android:id="@+id/btn_imageviewer_overflowMenu"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_gravity="end"
+                android:background="@null"
                 android:text="@string/common_menu" />
+
+            <ImageButton
+                android:id="@+id/btn_imageviewer_toggleDisplay"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:layout_gravity="end"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:padding="13dp"
+                android:src="@drawable/hide"
+                android:contentDescription="@string/imageviewer_detailstoggle" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

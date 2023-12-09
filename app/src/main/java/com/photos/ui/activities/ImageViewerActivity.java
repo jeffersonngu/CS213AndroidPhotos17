@@ -2,10 +2,13 @@ package com.photos.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
 import android.widget.Button;
+import android.widget.PopupMenu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -23,7 +26,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ImageViewerActivity extends AppCompatActivity {
+public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     private ImageViewerAdapter adapter;
     private ImageViewerViewModel imageViewerViewModel;
@@ -66,6 +69,7 @@ public class ImageViewerActivity extends AppCompatActivity {
 
         AppBarLayout appBarLayout = findViewById(R.id.abl_imageviewer);
         Button back = findViewById(R.id.btn_imageviewer_back);
+        Button overflowMenu = findViewById(R.id.btn_imageviewer_overflowMenu);
 
         /* Note: Interestingly we must access the internal RecyclerView of viewpager instead */
         viewpager.getChildAt(0).setOnTouchListener((view, event) -> {
@@ -80,5 +84,29 @@ public class ImageViewerActivity extends AppCompatActivity {
             }
             return false;
         });
+
+        overflowMenu.setOnClickListener(this::showMenu);
+    }
+
+    public void showMenu(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.getMenu().setGroupDividerEnabled(true);
+        popup.setOnMenuItemClickListener(this);
+        popup.getMenuInflater().inflate(R.menu.popm_imageviewer, popup.getMenu());
+        popup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.popm_imageviewer_modifyLocationTag) {
+            Log.i("Testing", "testing");
+            return true;
+        } else if (id == R.id.popm_imageviewer_addPersonTag) {
+            return true;
+        } else if (id == R.id.popm_imageviewer_deletePersonTag) {
+            return true;
+        }
+        return false;
     }
 }

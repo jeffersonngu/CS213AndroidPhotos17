@@ -1,0 +1,6 @@
+Attribution and Sources for images:
+
+no-image-icon.png by Ahkâm (https://www.freeiconspng.com/img/23485)
+
+show.png by Gregor Cresnar (https://www.flaticon.com/free-icon/eye_159604)
+hide.png by Gregor Cresnar (https://www.flaticon.com/free-icon/hide_215488)

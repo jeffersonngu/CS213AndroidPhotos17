@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/popm_imageviewer_modifyLocationTag"
+        android:title="@string/imageviewr_modifylocationtag" />
+    <group android:id="@+id/group_delete">
+        <item
+            android:id="@+id/popm_imageviewer_addPersonTag"
+            android:title="@string/imageviewr_addpersontag" />
+        <item
+            android:id="@+id/popm_imageviewer_deletePersonTag"
+            android:title="@string/imageviewr_deletepersontag" />
+    </group>
+</menu>
