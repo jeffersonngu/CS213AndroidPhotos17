@@ -28,8 +28,8 @@ public class AlbumViewerRepository {
         albumsDao = albumsDatabase.albumDao();
     }
 
-    public LiveData<Album> getAlbumData(int albumId) {
-        return albumsDao.getAlbum(albumId);
+    public LiveData<List<Photo>> getPhotoListLiveData(int albumId) {
+        return albumsDao.getPhotoList(albumId);
     }
 
     public void insertPhoto(Photo photo) {

@@ -32,8 +32,8 @@ public class AlbumViewerViewModel extends ViewModel {
         this.albumViewerRepository = albumViewerRepository;
     }
 
-    public LiveData<Album> getAlbumLiveData(int albumId) {
-        return albumViewerRepository.getAlbumData(albumId);
+    public LiveData<List<Photo>> getPhotoListLiveData(int albumId) {
+        return albumViewerRepository.getPhotoListLiveData(albumId);
     }
 
     public void addNewPhoto(Photo photo) {

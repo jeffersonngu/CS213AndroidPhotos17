@@ -42,8 +42,6 @@ public class ImageViewerActivity extends AppCompatActivity implements ImagerView
     private ImageViewerAdapter adapter;
     private ImageViewerViewModel imageViewerViewModel;
 
-    private int albumId;
-
     private ViewPager2 viewpager;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -51,25 +49,28 @@ public class ImageViewerActivity extends AppCompatActivity implements ImagerView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /* Checks that we entered the activity correctly */
-        albumId = getIntent().getIntExtra("albumId", -1);
-        if (albumId < 0) finish();
-
-        int entryPosition = getIntent().getIntExtra("entryPosition", -1);
-        if (entryPosition < 0) finish();
-
         /* Initializing our ViewModel */
         imageViewerViewModel = new ViewModelProvider(
                 this,
                 ViewModelProvider.Factory.from(ImageViewerViewModel.INITIALIZER)
         ).get(ImageViewerViewModel.class);
 
+        /* Check how we enter our activity */
+        LiveData<List<Photo>> photoListLiveData;
+        int albumId = getIntent().getIntExtra("albumId", -1);
+        if (albumId < 0) {
+            photoListLiveData = imageViewerViewModel.getPhotoListLiveData(0);
+        } else {
+            photoListLiveData = imageViewerViewModel.getPhotoListLiveData(albumId);
+        }
+
+        int entryPosition = getIntent().getIntExtra("entryPosition", -1);
+        if (entryPosition < 0) finish();
+
         /* Initializing ViewPager layout */
         setContentView(R.layout.activity_imageviewer);
         viewpager = findViewById(R.id.vp_imageviewer);
         viewpager.setPageTransformer(new MarginPageTransformer(50));
-
-        LiveData<List<Photo>> photoListLiveData = imageViewerViewModel.getPhotoListLiveData(albumId);
 
         adapter = new ImageViewerAdapter(this, photoListLiveData.getValue());
         viewpager.setAdapter(adapter);

@@ -46,27 +46,35 @@ public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        albumId = getIntent().getIntExtra("albumId", -1);
-        if (albumId < 0) finish();
-
         albumViewerViewModel = new ViewModelProvider(
                 this,
                 ViewModelProvider.Factory.from(AlbumViewerViewModel.INITIALIZER)
         ).get(AlbumViewerViewModel.class);
 
+        LiveData<List<Photo>> photoListLiveData;
+
+        albumId = getIntent().getIntExtra("albumId", -1);
+        if (albumId < 0) { /* Search Mode */
+            photoListLiveData = albumViewerViewModel.getPhotoListLiveData(0);
+        } else { /* Album mode */
+            photoListLiveData = albumViewerViewModel.getPhotoListLiveData(albumId);
+        }
+
         setContentView(R.layout.activity_albumviewer);
         RecyclerView recyclerView = findViewById(R.id.rv_albumviewer);
 
-        LiveData<Album> albumLiveData = albumViewerViewModel.getAlbumLiveData(albumId);
-
-        adapter = new AlbumViewerAdapter(this, albumLiveData.getValue());
+        adapter = new AlbumViewerAdapter(this, photoListLiveData.getValue());
         recyclerView.setAdapter(adapter);
 
         registerForContextMenu(recyclerView);
 
-        albumLiveData.observe(this, album -> adapter.setAlbum(album));
+        photoListLiveData.observe(this, album -> adapter.setPhotoList(album));
 
-        findViewById(R.id.btn_albumviewer_add).setOnClickListener(this::showMenu);
+        if (albumId < 0) {
+            findViewById(R.id.btn_albumviewer_add).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.btn_albumviewer_add).setOnClickListener(this::showMenu);
+        }
 
         findViewById(R.id.btn_albumviewer_back).setOnClickListener(v -> finish());
     }

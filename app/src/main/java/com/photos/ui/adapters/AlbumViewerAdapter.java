@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.photos.R;
-import com.photos.models.Album;
 import com.photos.models.Photo;
 import com.photos.ui.activities.AlbumViewerListener;
+
+import java.util.List;
 
 public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.ViewHolder> {
 
@@ -36,13 +37,13 @@ public class AlbumViewerAdapter extends RecyclerView.Adapter<AlbumViewerAdapter.
         }
     });
 
-    public AlbumViewerAdapter(AlbumViewerListener listener, Album album) {
+    public AlbumViewerAdapter(AlbumViewerListener listener, List<Photo> photoList) {
         this.listener = listener;
-        setAlbum(album);
+        setPhotoList(photoList);
     }
 
-    public void setAlbum(Album album) {
-        if (album != null) mDiffer.submitList(album.getPhotoList());
+    public void setPhotoList(List<Photo> photoList) {
+        mDiffer.submitList(photoList);
     }
 
     @NonNull
