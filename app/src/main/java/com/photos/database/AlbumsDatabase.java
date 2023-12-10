@@ -11,7 +11,7 @@ import com.photos.models.Album;
 import com.photos.models.Photo;
 
 @Database(entities = { Album.AlbumInfo.class, Photo.class }, version = 1)
-@TypeConverters({ ListStringConverter.class, UriConverter.class })
+@TypeConverters({ SetStringConverter.class, UriConverter.class })
 public abstract class AlbumsDatabase extends RoomDatabase {
 
     private static AlbumsDatabase instance;

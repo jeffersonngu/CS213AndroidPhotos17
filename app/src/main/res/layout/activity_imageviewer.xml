@@ -10,8 +10,8 @@
         android:id="@+id/vp_imageviewer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-100dp"
-        tools:layout_editor_absoluteY="56dp" />
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="106dp" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/abl_imageviewer"
@@ -55,8 +55,40 @@
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:padding="13dp"
-                android:src="@drawable/hide"
+                android:src="@drawable/show"
                 android:contentDescription="@string/imageviewer_detailstoggle" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/sv_imageviewer"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintWidth_percent="0.4"
+        android:fadeScrollbars="true"
+        android:background="@color/info_transparent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_imageviewer_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_imageviewer_people"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

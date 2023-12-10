@@ -11,8 +11,8 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(tableName = "photos", foreignKeys = {
         @ForeignKey(entity = Album.AlbumInfo.class, parentColumns = {"id"}, childColumns = {"albumId"},
@@ -44,7 +44,7 @@ public class Photo {
      * Person tag type
      */
     @ColumnInfo
-    private final List<String> people;
+    private final Set<String> people;
 
     /**
      * Main constructor
@@ -54,10 +54,10 @@ public class Photo {
     public Photo(@NonNull Uri uri, int albumId) {
         this.uri = uri;
         this.albumId = albumId;
-        this.people = new ArrayList<>();
+        this.people = new HashSet<>();
     }
 
-    public Photo(int id, @NonNull Uri uri, @Nullable String location, List<String> people, int albumId) {
+    public Photo(int id, @NonNull Uri uri, @Nullable String location, Set<String> people, int albumId) {
         this.id = id;
         this.uri = uri;
         this.location = location;
@@ -81,7 +81,7 @@ public class Photo {
     @Nullable
     public String getLocation() { return location; }
 
-    public List<String> getPeople() { return people; }
+    public Set<String> getPeople() { return people; }
 
     @Override
     public boolean equals(Object obj) {

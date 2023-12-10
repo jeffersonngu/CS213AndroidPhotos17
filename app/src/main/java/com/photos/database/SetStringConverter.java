@@ -5,27 +5,27 @@ import androidx.room.TypeConverter;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-public class ListStringConverter {
+public class SetStringConverter {
 
     @TypeConverter
-    public static List<String> toStringList(String value) {
-        List<String> list = new ArrayList<>();
+    public static Set<String> toStringSet(String value) {
+        Set<String> set = new HashSet<>();
         try {
             JSONArray jsonArray = new JSONArray(value);
             for (int i = 0; i < jsonArray.length(); i++) {
-                list.add(jsonArray.getString(i));
+                set.add(jsonArray.getString(i));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        return list;
+        return set;
     }
 
     @TypeConverter
-    public static String fromStringList(List<String> list) {
-        return new JSONArray(list).toString();
+    public static String fromStringSet(Set<String> set) {
+        return new JSONArray(set).toString();
     }
 }

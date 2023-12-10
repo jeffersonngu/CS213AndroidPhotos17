@@ -39,12 +39,12 @@ public class ImageViewerViewModel extends ViewModel {
         imageViewerRepository.photoSetLocation(photo.getId(), newLocation);
     }
 
-    public void photoAddPerson(Photo photo, String newPerson) {
-        imageViewerRepository.photoPeopleListAdd(photo.getId(), newPerson);
+    public boolean photoAddPerson(Photo photo, String newPerson) {
+        return imageViewerRepository.photoPeopleSetAdd(photo, newPerson);
     }
 
     public void photoRemovePerson(Photo photo, String person) {
-        imageViewerRepository.photoPeopleListRemove(photo, person);
+        imageViewerRepository.photoPeopleSetRemove(photo, person);
     }
 
     public void onDestroy() {

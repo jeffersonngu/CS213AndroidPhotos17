@@ -17,6 +17,7 @@ import com.photos.util.PhotosFileUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Handles our Inserts and Transactions
@@ -70,24 +71,34 @@ public abstract class AlbumsDao {
     public abstract void photoSetLocation(int photoId, String newLocation);
 
     /* Helper Method for photoPeopleListAdd/Remove */
-    @Query("SELECT people FROM photos WHERE id = :photoId")
-    abstract List<String> getPhotoPeopleList(int photoId);
+    // @Query("SELECT people FROM photos WHERE id = :photoId ORDER BY id DESC LIMIT 1")
+    // abstract Set<String> getPhotoPeople(int photoId);
+    //
+    // private Set<String> getPhotoPeopleSet(int photoId) {
+    //     Log.i("testing1", getPhotoPeople(photoId).toString());
+    //     return new HashSet<>(getPhotoPeople(photoId));
+    // }
+
+    @Query("UPDATE photos SET people = :newPeople WHERE id = :photoId")
+    abstract void photoUpdatePeopleSet(int photoId, Set<String> newPeople);
 
     @Transaction
-    public void photoPeopleListAdd(int photoId, String newPerson) {
-        List<String> people = getPhotoPeopleList(photoId);
-        people.add(newPerson);
+    public boolean photoPeopleSetAdd(Photo photo, String newPerson) {
+        Set<String> people = photo.getPeople();
+        if (people.add(newPerson)) {
+            photoUpdatePeopleSet(photo.getId(), people);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    /**
-     * Should only be called when certain that person exists
-     * @param photoId ID of Photo
-     * @param person Person to remove
-     */
     @Transaction
-    public void photoPeopleListRemove(int photoId, String person) {
-        List<String> people = getPhotoPeopleList(photoId);
-        people.remove(person);
+    public void photoPeopleSetRemove(Photo photo, String person) {
+        Set<String> people = photo.getPeople();
+        if (people.remove(person)) {
+            photoUpdatePeopleSet(photo.getId(), people);
+        }
     }
 
     private void deletePhotoFile(Photo photo) {
