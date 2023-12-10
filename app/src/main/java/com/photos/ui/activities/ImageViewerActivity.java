@@ -28,6 +28,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.photos.R;
 import com.photos.models.Photo;
 import com.photos.ui.adapters.ImageViewerAdapter;
+import com.photos.util.PhotosFileUtils;
 import com.photos.util.PhotosViewUtils;
 import com.photos.viewmodels.ImageViewerViewModel;
 
@@ -144,6 +145,10 @@ public class ImageViewerActivity extends AppCompatActivity implements ImagerView
 
     public void updateDetails() {
         Photo photo = adapter.getPhoto(viewpager.getCurrentItem());
+
+        TextView filenameDetails = findViewById(R.id.tv_imageviewer_filename);
+        StringBuilder stringBuilderFilename = new StringBuilder("Name: ").append(PhotosFileUtils.getFileName(this, photo.getUri()));
+        filenameDetails.setText(stringBuilderFilename);
 
         TextView locationTagDetails = findViewById(R.id.tv_imageviewer_location);
         StringBuilder stringBuilderLocation;
