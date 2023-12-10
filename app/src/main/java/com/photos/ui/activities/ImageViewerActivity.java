@@ -220,6 +220,10 @@ public class ImageViewerActivity extends AppCompatActivity implements ImagerView
         /* Custom handler for Submit */
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String input = editText.getText().toString();
+            if (input.isBlank()) {
+                alertDialog.setMessage("Entered person is blank");
+                return;
+            }
             boolean result = imageViewerViewModel.photoAddPerson(photo, input);
             if (result) {
                 alertDialog.dismiss();
@@ -235,11 +239,11 @@ public class ImageViewerActivity extends AppCompatActivity implements ImagerView
         new AlertDialog.Builder(this)
                 .setTitle("Remove from Person Tag") /* Cannot use both message and setItems at same time */
                 .setMultiChoiceItems(people, checked, ((dialog, which, isChecked) -> checked[which] = isChecked))
-                .setPositiveButton("Remove", ((dialog, which) -> {
+                .setPositiveButton("Remove", (dialog, which) -> {
                     IntStream.range(0, checked.length)
                             .filter(i -> checked[i])
                             .forEach(i -> imageViewerViewModel.photoRemovePerson(photo, people[i]));
-                }))
+                })
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();

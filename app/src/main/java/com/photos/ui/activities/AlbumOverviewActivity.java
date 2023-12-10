@@ -84,7 +84,11 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
         /* Custom handler for Submit */
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String input = editText.getText().toString();
-            if (input.matches("^[a-zA-Z0-9]*")) {
+            if (input.isBlank()) {
+                alertDialog.setMessage("Only non blank names allowed");
+            } else if (!input.matches("^[a-zA-Z0-9]*")) {
+                alertDialog.setMessage("Only alphanumeric (letters and numbers no whitespaces) names allowed");
+            } else {
                 Boolean result = albumOverviewViewModel.addNewAlbum(new Album(input));
                 if (result == null) {
                     alertDialog.setMessage("Timed Out: The Album may or may not have been created");
@@ -93,8 +97,6 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
                 } else {
                     alertDialog.dismiss();
                 }
-            } else {
-                alertDialog.setMessage("Only alphanumeric (letters and numbers no whitespaces) names allowed");
             }
         });
     }
@@ -116,7 +118,11 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
         /* Custom handler for Submit */
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String input = editText.getText().toString();
-            if (input.matches("^[a-zA-Z0-9]*")) {
+            if (input.isBlank()) {
+                alertDialog.setMessage("Only non blank names allowed");
+            } else if (!input.matches("^[a-zA-Z0-9]*")) {
+                alertDialog.setMessage("Only alphanumeric (letters and numbers no whitespaces) names allowed");
+            } else {
                 Boolean result = albumOverviewViewModel.renameAlbum(album, input);
                 if (result == null) {
                     alertDialog.setMessage("Timed Out: The Album may or may not have been renamed");
@@ -125,8 +131,6 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
                 } else {
                     alertDialog.dismiss();
                 }
-            } else {
-                alertDialog.setMessage("Only alphanumeric (letters and numbers no whitespaces) names allowed");
             }
         });
     }

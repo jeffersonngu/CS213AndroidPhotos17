@@ -32,7 +32,11 @@ public class ImageViewerRepository {
     }
 
     public void photoSetLocation(int photoId, String newLocation) {
-        executorService.execute(() -> albumsDao.photoSetLocation(photoId, newLocation));
+        if (newLocation.isBlank()) {
+            executorService.execute(() -> albumsDao.photoSetLocation(photoId, null));
+        } else {
+            executorService.execute(() -> albumsDao.photoSetLocation(photoId, newLocation));
+        }
     }
 
     public boolean photoPeopleSetAdd(Photo photo, String newPerson) {
