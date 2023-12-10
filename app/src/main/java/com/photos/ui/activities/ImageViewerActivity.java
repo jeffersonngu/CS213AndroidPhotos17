@@ -132,6 +132,7 @@ public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.
 
     public void modifyLocationTagDialog(Photo photo) {
         EditText editText = new EditText(this);
+        editText.setText(photo.getLocation());
         editText.setMaxLines(1);
         PhotosViewUtils.addEditTextFilter(editText, new InputFilter.LengthFilter(20));
         new AlertDialog.Builder(this)
