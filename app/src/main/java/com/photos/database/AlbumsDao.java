@@ -114,9 +114,16 @@ public abstract class AlbumsDao {
         deleteAlbumInfo(album.getAlbumInfo()); /* Because we use onDelete CASCADE we do not have to worry about Photo */
     }
 
+    @Query("UPDATE photos SET albumId = :albumId WHERE id = :photoId")
+    public abstract void movePhoto(int photoId, int albumId);
+
     @Transaction
     @Query("SELECT * FROM albums")
     public abstract LiveData<List<Album>> getAllAlbums();
+
+    @Transaction
+    @Query("SELECT * FROM albums")
+    public abstract List<Album> getAllAlbumsNoLive();
 
     @Transaction
     @Query("SELECT * FROM albums WHERE id = :albumId")

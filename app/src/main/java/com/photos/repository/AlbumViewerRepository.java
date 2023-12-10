@@ -1,6 +1,7 @@
 package com.photos.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -9,8 +10,13 @@ import com.photos.database.AlbumsDatabase;
 import com.photos.models.Album;
 import com.photos.models.Photo;
 
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class AlbumViewerRepository {
 
@@ -19,8 +25,7 @@ public class AlbumViewerRepository {
 
     public AlbumViewerRepository(Application application) {
         AlbumsDatabase albumsDatabase = AlbumsDatabase.getInstance(application);
-        albumsDao =
-                albumsDatabase.albumDao();
+        albumsDao = albumsDatabase.albumDao();
     }
 
     public LiveData<Album> getAlbumData(int albumId) {
@@ -33,6 +38,24 @@ public class AlbumViewerRepository {
 
     public void deletePhoto(Photo photo) {
         executorService.execute(() -> albumsDao.deletePhoto(photo));
+    }
+
+    public List<Album> getAllAlbums() {
+        Future<List<Album>> result = executorService.submit(albumsDao::getAllAlbumsNoLive);
+        try {
+            return result.get(10000, TimeUnit.MILLISECONDS);
+        } catch (TimeoutException e) {
+            Log.w("Photos", "Extracting Albums timed out! " + e);
+        } catch (InterruptedException e) {
+            Log.w("Photos", "Executor Service was interrupted: " + e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public void movePhoto(Photo photo, Album newAlbum) {
+        executorService.execute(() -> albumsDao.movePhoto(photo.getId(), newAlbum.getAlbumInfo().getId()));
     }
 
     public void onDestroy() {

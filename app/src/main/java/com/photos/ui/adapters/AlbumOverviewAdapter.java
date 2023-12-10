@@ -46,6 +46,7 @@ public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdap
             Photo newLastPhoto = newPhotoList.isEmpty() ? null : newPhotoList.get(newPhotoList.size() - 1);
 
             return oldAlbum.equals(newAlbum)
+                    && oldAlbum.getPhotoList().size() == newAlbum.getPhotoList().size()
                     && Objects.equals(oldLastPhoto, newLastPhoto);
         }
     });

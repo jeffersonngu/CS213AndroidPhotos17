@@ -28,6 +28,8 @@ import com.photos.util.PhotosFileUtils;
 import com.photos.viewmodels.AlbumViewerViewModel;
 
 import java.io.File;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewerListener, PopupMenu.OnMenuItemClickListener {
 
@@ -122,6 +124,9 @@ public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewe
         if (id == R.id.cm_albumviewer_delete) {
             removePhotoDialog(adapter.getLastLongClickPhoto());
             return true;
+        } else if (id == R.id.cm_albumviewer_move) {
+            movePhotoDialog(adapter.getLastLongClickPhoto());
+            return true;
         }
         return super.onContextItemSelected(item);
     }
@@ -131,6 +136,25 @@ public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewe
                 .setTitle("Delete Photo?")
                 .setMessage("Are you sure you want to delete photo '" + PhotosFileUtils.getFileName(this, photo.getUri()) + "'?")
                 .setPositiveButton("Confirm", (dialogInterface, which) -> albumViewerViewModel.removePhoto(photo))
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
+    public void movePhotoDialog(Photo photo) {
+        List<Album> albums = albumViewerViewModel.getAllAlbums();
+        if (albums == null) return;
+        albums.removeIf(album -> album.getAlbumInfo().getId() == photo.getAlbumId());
+
+        AtomicInteger selected = new AtomicInteger(-1);
+        String[] albumNames = albums.stream().map(Album::getName).toArray(String[]::new);
+        new AlertDialog.Builder(this)
+                .setTitle("Move Photo to Album:")
+                .setSingleChoiceItems(albumNames, selected.get(), ((dialog, which) -> selected.set(which)))
+                .setPositiveButton("Move", (dialog, which) -> {
+                    if (selected.get() == -1) return;
+                    albumViewerViewModel.movePhoto(photo, albums.get(selected.get()));
+                })
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();

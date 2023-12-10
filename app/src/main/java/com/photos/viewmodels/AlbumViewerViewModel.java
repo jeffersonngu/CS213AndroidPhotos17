@@ -11,6 +11,8 @@ import com.photos.models.Album;
 import com.photos.models.Photo;
 import com.photos.repository.AlbumViewerRepository;
 
+import java.util.List;
+
 public class AlbumViewerViewModel extends ViewModel {
 
     /* https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#java */
@@ -40,6 +42,14 @@ public class AlbumViewerViewModel extends ViewModel {
 
     public void removePhoto(Photo photo) {
         albumViewerRepository.deletePhoto(photo);
+    }
+
+    public List<Album> getAllAlbums() {
+        return albumViewerRepository.getAllAlbums();
+    }
+
+    public void movePhoto(Photo photo, Album newAlbum) {
+        albumViewerRepository.movePhoto(photo, newAlbum);
     }
 
     public void onDestroy() {

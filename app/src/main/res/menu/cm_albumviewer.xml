@@ -3,4 +3,7 @@
     <item
         android:id="@+id/cm_albumviewer_delete"
         android:title="@string/common_delete" />
+    <item
+        android:id="@+id/cm_albumviewer_move"
+        android:title="@string/albumviewer_move" />
 </menu>
