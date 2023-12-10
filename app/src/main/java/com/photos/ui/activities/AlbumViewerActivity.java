@@ -65,6 +65,8 @@ public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewe
         albumLiveData.observe(this, album -> adapter.setAlbum(album));
 
         findViewById(R.id.btn_albumviewer_add).setOnClickListener(this::showMenu);
+
+        findViewById(R.id.btn_albumviewer_back).setOnClickListener(v -> finish());
     }
 
     public void showMenu(View v) {

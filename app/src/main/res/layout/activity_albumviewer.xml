@@ -11,23 +11,46 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
+        android:focusable="false"
         android:orientation="vertical"
         android:padding="16dp"
+        android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/abl_albumviewer"
         app:spanCount="3"
-        tools:listitem="@layout/item_photo"
-        android:focusable="false" />
+        tools:listitem="@layout/item_photo" />
 
-    <Button
-        android:id="@+id/btn_albumviewer_add"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:text="@string/common_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:focusable="auto" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/abl_albumviewer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp">
+
+            <Button
+                android:id="@+id/btn_albumviewer_back"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="4dp"
+                android:layout_gravity="start"
+                android:text="@string/common_back" />
+
+            <Button
+                android:id="@+id/btn_albumviewer_add"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="4dp"
+                android:layout_gravity="end"
+                android:text="@string/common_add" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

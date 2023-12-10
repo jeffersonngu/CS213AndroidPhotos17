@@ -10,22 +10,49 @@
         android:id="@+id/rv_albumoverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
         android:orientation="vertical"
         android:padding="16dp"
+        android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/abl_albumoverview"
         app:spanCount="2"
+        android:focusable="false"
         tools:listitem="@layout/item_album" />
 
-    <Button
-        android:id="@+id/btn_albumoverview_add"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:text="@string/common_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/abl_albumoverview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp">
+
+            <Button
+                android:id="@+id/btn_albumoverview_add"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="4dp"
+                android:layout_gravity="end"
+                android:text="@string/common_add" />
+
+            <ImageButton
+                android:id="@+id/btn_albumoverview_search"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="4dp"
+                android:layout_gravity="end"
+                android:scaleType="fitCenter"
+                android:padding="23dp"
+                android:src="@drawable/search"
+                android:contentDescription="@string/albumoverview_searchbutton" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

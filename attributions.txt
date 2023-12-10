@@ -4,3 +4,5 @@ no-image-icon.png by Ahkâm (https://www.freeiconspng.com/img/23485)
 
 show.png by Gregor Cresnar (https://www.flaticon.com/free-icon/eye_159604)
 hide.png by Gregor Cresnar (https://www.flaticon.com/free-icon/hide_215488)
+
+search.png by Catalin Fertu (https://www.flaticon.com/free-icon/search-interface-symbol_54481)

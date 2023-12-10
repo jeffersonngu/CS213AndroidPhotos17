@@ -17,4 +17,5 @@
     <string name="imageviewr_addpersontag">Add to Person Tag</string>
     <string name="imageviewr_deletepersontag">Remove from Person Tag</string>
     <string name="imageviewer_detailstoggle">Show/Hide Details</string>
+    <string name="albumoverview_searchbutton">Search Button</string>
 </resources>
