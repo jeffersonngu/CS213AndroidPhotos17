@@ -19,4 +19,8 @@
     <string name="imageviewer_detailstoggle">Show/Hide Details</string>
     <string name="albumoverview_searchbutton">Search Button</string>
     <string name="albumviewer_move">Move to Album</string>
+    <string name="tagsearch_and">AND</string>
+    <string name="tagsearch_or">OR</string>
+    <string name="tagsearch_enterperson">Enter a person</string>
+    <string name="tagsearch_enterlocation">Enter a location</string>
 </resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <AutoCompleteTextView
+        android:id="@+id/actv_tagsearch_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:completionThreshold="1"
+        android:hint="@string/tagsearch_enterlocation" />
+
+    <AutoCompleteTextView
+        android:id="@+id/actv_tagsearch_person"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:completionThreshold="1"
+        android:hint="@string/tagsearch_enterperson" />
+
+    <RadioGroup
+        android:id="@+id/rg_tagsearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RadioButton
+            android:id="@+id/rb_tagsearch_and"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tagsearch_and"/>
+        <RadioButton
+            android:id="@+id/rb_tagsearch_or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tagsearch_or"/>
+    </RadioGroup>
+</LinearLayout>

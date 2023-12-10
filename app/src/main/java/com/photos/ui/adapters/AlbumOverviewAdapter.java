@@ -56,6 +56,10 @@ public class AlbumOverviewAdapter extends RecyclerView.Adapter<AlbumOverviewAdap
         setAlbumList(albumList);
     }
 
+    public List<Album> getCurrentAlbumList() {
+        return mDiffer.getCurrentList();
+    }
+
     public void setAlbumList(List<Album> albumList) {
         mDiffer.submitList(albumList);
     }

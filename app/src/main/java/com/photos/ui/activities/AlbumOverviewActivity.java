@@ -6,8 +6,11 @@ import android.text.InputFilter;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -17,9 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.photos.R;
 import com.photos.models.Album;
+import com.photos.models.Photo;
 import com.photos.ui.adapters.AlbumOverviewAdapter;
 import com.photos.util.PhotosViewUtils;
 import com.photos.viewmodels.AlbumOverviewViewModel;
+
+import java.util.List;
 
 public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOverviewListener {
 
@@ -47,6 +53,9 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
 
         Button addAlbumButton = findViewById(R.id.btn_albumoverview_add);
         addAlbumButton.setOnClickListener(l -> addAlbumDialog());
+
+        ImageButton searchTagButton = findViewById(R.id.ibtn_albumoverview_search);
+        searchTagButton.setOnClickListener(l -> searchPhotosDialog());
     }
 
     @Override
@@ -140,6 +149,37 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
                 .setTitle("Delete Album?")
                 .setMessage("Are you sure you want to delete album '" + album.getName() + "' and all its photos?")
                 .setPositiveButton("Confirm", (dialogInterface, which) -> albumOverviewViewModel.removeAlbum(album))
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
+    public void searchPhotosDialog() {
+        View searchTagView = getLayoutInflater().inflate(R.layout.layout_tagsearch, null);
+
+        List<Album> albumList = adapter.getCurrentAlbumList();
+        String[] locationArray = albumList.stream()
+                .flatMap(album -> album.getPhotoList().stream())
+                .map(Photo::getLocation)
+                .distinct()
+                .toArray(String[]::new);
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, locationArray);
+        AutoCompleteTextView locationAutoCompleteTextView = searchTagView.findViewById(R.id.actv_tagsearch_location);
+        locationAutoCompleteTextView.setAdapter(locationAdapter);
+
+        String[] peopleArray = albumList.stream()
+                .flatMap(album -> album.getPhotoList().stream())
+                .flatMap(photo -> photo.getPeople().stream())
+                .distinct()
+                .toArray(String[]::new);
+        ArrayAdapter<String> personAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, peopleArray);
+        AutoCompleteTextView personAutoCompleteTextView = searchTagView.findViewById(R.id.actv_tagsearch_person);
+        personAutoCompleteTextView.setAdapter(personAdapter);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Search Photos")
+                .setView(searchTagView)
+                .setPositiveButton("Submit", null)
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();
