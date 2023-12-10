@@ -131,7 +131,7 @@ public abstract class AlbumsDao {
     @Query("SELECT * FROM photos")
     public abstract LiveData<List<Photo>> getPhotoList();
 
-    @Query("SELECT * FROM photos WHERE location = :location")
+    @Query("SELECT * FROM photos WHERE location COLLATE NOCASE = :location")
     public abstract LiveData<List<Photo>> getPhotoListFromLocation(String location);
 
     /*
@@ -141,9 +141,9 @@ public abstract class AlbumsDao {
     @Query("SELECT * FROM photos WHERE people LIKE '%\"' || :person || '\"%'")
     public abstract LiveData<List<Photo>> getPhotoListFromPerson(String person);
 
-    @Query("SELECT * FROM photos WHERE location = :location AND people LIKE '%\"' || :person || '\"%'")
+    @Query("SELECT * FROM photos WHERE location COLLATE NOCASE = :location AND people LIKE '%\"' || :person || '\"%'")
     public abstract LiveData<List<Photo>> getPhotoListFromLocationAndPerson(String location, String person);
 
-    @Query("SELECT * FROM photos WHERE location = :location OR people LIKE '%\"' || :person || '\"%'")
+    @Query("SELECT * FROM photos WHERE location COLLATE NOCASE = :location OR people LIKE '%\"' || :person || '\"%'")
     public abstract LiveData<List<Photo>> getPhotoListFromLocationOrPerson(String location, String person);
 }
