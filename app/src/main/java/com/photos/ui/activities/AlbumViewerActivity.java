@@ -101,13 +101,14 @@ public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewe
                     .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                     .build());
             return true;
-        } else if (id == R.id.popm_albumviewer_file) {
-            // Stuff
-            return true;
-        } else if (id == R.id.popm_albumviewer_url) {
-            // Stuff
-            return true;
         }
+        // } else if (id == R.id.popm_albumviewer_file) {
+        //     // Stuff
+        //     return true;
+        // } else if (id == R.id.popm_albumviewer_url) {
+        //     // Stuff
+        //     return true;
+        // }
         return false;
     }
 

@@ -3,10 +3,10 @@
     <item
         android:id="@+id/popm_albumviewer_gallery"
         android:title="@string/albumviewer_addfromgallery" />
-    <item
-        android:id="@+id/popm_albumviewer_file"
-        android:title="@string/albumviewer_addfromfile" />
-    <item
-        android:id="@+id/popm_albumviewer_url"
-        android:title="@string/albumviewer_addfromurl" />
+    <!--<item-->
+    <!--    android:id="@+id/popm_albumviewer_file"-->
+    <!--    android:title="@string/albumviewer_addfromfile" />-->
+    <!--<item-->
+    <!--    android:id="@+id/popm_albumviewer_url"-->
+    <!--    android:title="@string/albumviewer_addfromurl" />-->
 </menu>
