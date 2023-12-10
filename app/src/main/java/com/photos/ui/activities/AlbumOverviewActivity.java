@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -26,6 +27,7 @@ import com.photos.util.PhotosViewUtils;
 import com.photos.viewmodels.AlbumOverviewViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOverviewListener {
 
@@ -161,6 +163,7 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
         String[] locationArray = albumList.stream()
                 .flatMap(album -> album.getPhotoList().stream())
                 .map(Photo::getLocation)
+                .filter(Objects::nonNull)
                 .distinct()
                 .toArray(String[]::new);
         ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, locationArray);
@@ -176,10 +179,18 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
         AutoCompleteTextView personAutoCompleteTextView = searchTagView.findViewById(R.id.actv_tagsearch_person);
         personAutoCompleteTextView.setAdapter(personAdapter);
 
+        RadioGroup radioGroup = searchTagView.findViewById(R.id.rg_tagsearch);
+
         new AlertDialog.Builder(this)
                 .setTitle("Search Photos")
                 .setView(searchTagView)
-                .setPositiveButton("Submit", null)
+                .setPositiveButton("Submit", (dialog, which) -> {
+                    Intent intent = new Intent(this, AlbumViewerActivity.class);
+                    intent.putExtra("location", locationAutoCompleteTextView.getText().toString());
+                    intent.putExtra("person", personAutoCompleteTextView.getText().toString());
+                    intent.putExtra("conjunction", radioGroup.getCheckedRadioButtonId() == R.id.rb_tagsearch_and);
+                    this.startActivity(intent);
+                })
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();

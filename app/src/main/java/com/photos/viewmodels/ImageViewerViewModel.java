@@ -35,6 +35,10 @@ public class ImageViewerViewModel extends ViewModel {
         return imageViewerRepository.getPhotoListData(albumId);
     }
 
+    public LiveData<List<Photo>> getPhotoListLiveData(String location, String person, boolean conjunction) {
+        return imageViewerRepository.queryPhotos(location, person, conjunction);
+    }
+
     public void photoSetLocation(Photo photo, String newLocation) {
         imageViewerRepository.photoSetLocation(photo.getId(), newLocation);
     }

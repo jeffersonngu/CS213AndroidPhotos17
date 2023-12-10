@@ -59,7 +59,10 @@ public class ImageViewerActivity extends AppCompatActivity implements ImagerView
         LiveData<List<Photo>> photoListLiveData;
         int albumId = getIntent().getIntExtra("albumId", -1);
         if (albumId < 0) {
-            photoListLiveData = imageViewerViewModel.getPhotoListLiveData(0);
+            String location = getIntent().getStringExtra("location");
+            String person = getIntent().getStringExtra("person");
+            boolean conjunction = getIntent().getBooleanExtra("conjunction", true);
+            photoListLiveData = imageViewerViewModel.getPhotoListLiveData(location, person, conjunction);
         } else {
             photoListLiveData = imageViewerViewModel.getPhotoListLiveData(albumId);
         }

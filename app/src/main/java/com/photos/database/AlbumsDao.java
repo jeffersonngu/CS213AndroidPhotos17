@@ -127,4 +127,23 @@ public abstract class AlbumsDao {
 
     @Query("SELECT * FROM photos WHERE albumId = :albumId")
     public abstract LiveData<List<Photo>> getPhotoList(int albumId);
+
+    @Query("SELECT * FROM photos")
+    public abstract LiveData<List<Photo>> getPhotoList();
+
+    @Query("SELECT * FROM photos WHERE location = :location")
+    public abstract LiveData<List<Photo>> getPhotoListFromLocation(String location);
+
+    /*
+     * Hacky trick, since we store the Set<String> as a JSONArray of ["data1", "data2", ...]
+     * we can simply match it to ":person", this should sanitize it as well
+     */
+    @Query("SELECT * FROM photos WHERE people LIKE '%\"' || :person || '\"%'")
+    public abstract LiveData<List<Photo>> getPhotoListFromPerson(String person);
+
+    @Query("SELECT * FROM photos WHERE location = :location AND people LIKE '%\"' || :person || '\"%'")
+    public abstract LiveData<List<Photo>> getPhotoListFromLocationAndPerson(String location, String person);
+
+    @Query("SELECT * FROM photos WHERE location = :location OR people LIKE '%\"' || :person || '\"%'")
+    public abstract LiveData<List<Photo>> getPhotoListFromLocationOrPerson(String location, String person);
 }

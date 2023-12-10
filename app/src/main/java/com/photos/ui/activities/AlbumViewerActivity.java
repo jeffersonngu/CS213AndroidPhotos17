@@ -38,6 +38,10 @@ public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewe
 
     private int albumId;
 
+    private String location;
+    private String person;
+    private boolean conjunction;
+
     /* https://developer.android.com/training/data-storage/shared/photopicker */
     private final ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), this::savePhoto);
@@ -55,7 +59,10 @@ public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewe
 
         albumId = getIntent().getIntExtra("albumId", -1);
         if (albumId < 0) { /* Search Mode */
-            photoListLiveData = albumViewerViewModel.getPhotoListLiveData(0);
+            location = getIntent().getStringExtra("location");
+            person = getIntent().getStringExtra("person");
+            conjunction = getIntent().getBooleanExtra("conjunction", true);
+            photoListLiveData = albumViewerViewModel.getPhotoListLiveData(location, person, conjunction);
         } else { /* Album mode */
             photoListLiveData = albumViewerViewModel.getPhotoListLiveData(albumId);
         }
@@ -170,7 +177,13 @@ public class AlbumViewerActivity extends AppCompatActivity implements AlbumViewe
 
     public void viewImage(int entryPosition) {
         Intent intent = new Intent(this, ImageViewerActivity.class);
-        intent.putExtra("albumId", albumId);
+        if (albumId < 0) {
+            intent.putExtra("location", location);
+            intent.putExtra("person", person);
+            intent.putExtra("conjunction", conjunction);
+        } else {
+            intent.putExtra("albumId", albumId);
+        }
         intent.putExtra("entryPosition", entryPosition);
         this.startActivity(intent);
     }

@@ -36,6 +36,12 @@ public class AlbumViewerViewModel extends ViewModel {
         return albumViewerRepository.getPhotoListLiveData(albumId);
     }
 
+    public LiveData<List<Photo>> getPhotoListLiveData(String location, String person, boolean conjunction) {
+        if (location == null) location = "";
+        if (person == null) person = "";
+        return albumViewerRepository.queryPhotos(location, person, conjunction);
+    }
+
     public void addNewPhoto(Photo photo) {
         albumViewerRepository.insertPhoto(photo);
     }

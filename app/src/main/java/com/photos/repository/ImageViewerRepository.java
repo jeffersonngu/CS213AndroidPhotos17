@@ -57,6 +57,25 @@ public class ImageViewerRepository {
         executorService.execute(() -> albumsDao.photoPeopleSetRemove(photo, person));
     }
 
+    public LiveData<List<Photo>> queryPhotos(String location, String person, boolean conjunction) {
+        boolean hasLocation = !location.isBlank();
+        boolean hasPerson = !person.isBlank();
+        if (!hasLocation && !hasPerson) { /* Neither location/person */
+            return albumsDao.getPhotoList();
+        } else if (!hasPerson) { /* Only location */
+            return albumsDao.getPhotoListFromLocation(location);
+        } else if (!hasLocation) { /* Only person */
+            return albumsDao.getPhotoListFromPerson(person);
+        } else { /* Both location/person */
+            if (conjunction) {
+                return albumsDao.getPhotoListFromLocationAndPerson(location, person);
+            } else {
+                return albumsDao.getPhotoListFromLocationOrPerson(location, person);
+            }
+        }
+    }
+
+
     public void onDestroy() {
         executorService.shutdown();
     }
