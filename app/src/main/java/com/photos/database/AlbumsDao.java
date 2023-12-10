@@ -70,15 +70,6 @@ public abstract class AlbumsDao {
     @Query("UPDATE photos SET location = :newLocation WHERE id = :photoId")
     public abstract void photoSetLocation(int photoId, String newLocation);
 
-    /* Helper Method for photoPeopleListAdd/Remove */
-    // @Query("SELECT people FROM photos WHERE id = :photoId ORDER BY id DESC LIMIT 1")
-    // abstract Set<String> getPhotoPeople(int photoId);
-    //
-    // private Set<String> getPhotoPeopleSet(int photoId) {
-    //     Log.i("testing1", getPhotoPeople(photoId).toString());
-    //     return new HashSet<>(getPhotoPeople(photoId));
-    // }
-
     @Query("UPDATE photos SET people = :newPeople WHERE id = :photoId")
     abstract void photoUpdatePeopleSet(int photoId, Set<String> newPeople);
 

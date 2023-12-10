@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.photos.models.Photo;
+import com.photos.ui.activities.ImagerViewerListener;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ImageViewerAdapter extends RecyclerView.Adapter<ImageViewerAdapter.ViewHolder> {
 
@@ -24,11 +26,14 @@ public class ImageViewerAdapter extends RecyclerView.Adapter<ImageViewerAdapter.
         @Override
         public boolean areContentsTheSame(@NonNull Photo oldPhoto, @NonNull Photo newPhoto) {
             return oldPhoto.equals(newPhoto)
-                    && oldPhoto.getAlbumId() == newPhoto.getAlbumId();
+                    && oldPhoto.getAlbumId() == newPhoto.getAlbumId()
+                    && Objects.equals(oldPhoto.getLocation(), newPhoto.getLocation())
+                    && oldPhoto.getPeople().equals(newPhoto.getPeople());
         }
     });
 
-    public ImageViewerAdapter(List<Photo> photoList) {
+    public ImageViewerAdapter(ImagerViewerListener listener, List<Photo> photoList) {
+        mDiffer.addListListener((previousList, currentList) -> listener.updateDetails());
         mDiffer.submitList(photoList);
     }
 

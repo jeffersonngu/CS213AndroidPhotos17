@@ -36,7 +36,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
 
-public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+public class ImageViewerActivity extends AppCompatActivity implements ImagerViewerListener, PopupMenu.OnMenuItemClickListener {
 
     private ImageViewerAdapter adapter;
     private ImageViewerViewModel imageViewerViewModel;
@@ -70,7 +70,7 @@ public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.
 
         LiveData<List<Photo>> photoListLiveData = imageViewerViewModel.getPhotoListLiveData(albumId);
 
-        adapter = new ImageViewerAdapter(photoListLiveData.getValue());
+        adapter = new ImageViewerAdapter(this, photoListLiveData.getValue());
         viewpager.setAdapter(adapter);
 
         AtomicBoolean firstRun = new AtomicBoolean(true); /* Only set the entry on first run, use atomic due to lambda */
@@ -106,7 +106,6 @@ public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.
             }
         });
 
-        photoListLiveData.observe(this, photoList -> updateDetails());
         viewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -143,27 +142,27 @@ public class ImageViewerActivity extends AppCompatActivity implements PopupMenu.
         });
     }
 
-    private void updateDetails() {
+    public void updateDetails() {
         Photo photo = adapter.getPhoto(viewpager.getCurrentItem());
 
         TextView locationTagDetails = findViewById(R.id.tv_imageviewer_location);
+        StringBuilder stringBuilderLocation;
         if (photo.getLocation() != null) {
-            StringBuilder stringBuilder = new StringBuilder("Location: ").append(photo.getLocation());
-            locationTagDetails.setText(stringBuilder);
+            stringBuilderLocation = new StringBuilder("Location: ").append(photo.getLocation());
         } else {
-            StringBuilder stringBuilder = new StringBuilder("Location: None");
-            locationTagDetails.setText(stringBuilder);
+            stringBuilderLocation = new StringBuilder("Location: None");
         }
+        locationTagDetails.setText(stringBuilderLocation);
 
         TextView peopleTagDetails = findViewById(R.id.tv_imageviewer_people);
+        StringBuilder stringBuilderPeople;
         if (!photo.getPeople().isEmpty()) {
-            StringBuilder stringBuilder = new StringBuilder("People:\n");
-            photo.getPeople().forEach(s -> stringBuilder.append(" ").append(s).append("\n"));
-            peopleTagDetails.setText(stringBuilder);
+            stringBuilderPeople = new StringBuilder("People:\n");
+            photo.getPeople().forEach(s -> stringBuilderPeople.append(" ").append(s).append("\n"));
         } else {
-            StringBuilder stringBuilder = new StringBuilder("People: None");
-            peopleTagDetails.setText(stringBuilder);
+            stringBuilderPeople = new StringBuilder("People: None");
         }
+        peopleTagDetails.setText(stringBuilderPeople);
     }
 
     private void showMenu(View v) {
