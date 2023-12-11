@@ -1,7 +1,5 @@
 # README
 
-## To run
-
 ## Assumptions/Notes for Grader
 ### Information for Setting Up
 1. JDK 17 is required (due to Android Gradle Plugin 8).
