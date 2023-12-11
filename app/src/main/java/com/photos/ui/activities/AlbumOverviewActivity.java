@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -106,6 +107,7 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
                 } else if (!result) {
                     alertDialog.setMessage("That Album name already exists");
                 } else {
+                    Toast.makeText(this, "Successfully created Album " + input, Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
                 }
             }
@@ -140,6 +142,7 @@ public class AlbumOverviewActivity extends AppCompatActivity implements AlbumOve
                 } else if (!result) {
                     alertDialog.setMessage("That Album name already exists");
                 } else {
+                    Toast.makeText(this, "Successfully renamed Album to " + input, Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
                 }
             }
