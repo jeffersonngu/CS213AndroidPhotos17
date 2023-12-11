@@ -2,11 +2,10 @@ package com.photos.util;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.FileUtils;
 import android.provider.OpenableColumns;
 import android.util.Pair;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -61,20 +60,8 @@ public class PhotosFileUtils {
      * @param destFileName The destination file name, if conflicts will overwrite
      */
     public static void copyFileToLocal(Context context, Uri sourceUri, String destFileName) {
-        /*
-         * We will use Buffered Streams despite overhead on small files for a few reasons
-         * 1. In the event of large files
-         * 2. We will not read/write many files at once so the overhead is negligible
-         */
-        try (
-            BufferedInputStream bis = new BufferedInputStream(context.getContentResolver().openInputStream(sourceUri));
-            BufferedOutputStream bos = new BufferedOutputStream(context.openFileOutput(destFileName, Context.MODE_PRIVATE))
-        ) {
-            byte[] buf = new byte[1024];
-            while (bis.read(buf) > 0) {
-                bos.write(buf);
-            }
-            bos.flush();
+        try {
+            FileUtils.copy(Objects.requireNonNull(context.getContentResolver().openInputStream(sourceUri)), context.openFileOutput(destFileName, Context.MODE_PRIVATE));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
