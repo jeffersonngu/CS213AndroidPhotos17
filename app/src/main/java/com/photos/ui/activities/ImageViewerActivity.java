@@ -188,6 +188,9 @@ public class ImageViewerActivity extends AppCompatActivity implements ImagerView
         if (id == R.id.popm_imageviewer_modifyLocationTag) {
             modifyLocationTagDialog(adapter.getPhoto(viewpager.getCurrentItem()));
             return true;
+        } else if (id == R.id.popm_imageviewer_deleteLocationTag) {
+            deleteLocationTag(adapter.getPhoto(viewpager.getCurrentItem()));
+            return true;
         } else if (id == R.id.popm_imageviewer_addPersonTag) {
             addPersonTagDialog(adapter.getPhoto(viewpager.getCurrentItem()));
             return true;
@@ -196,6 +199,10 @@ public class ImageViewerActivity extends AppCompatActivity implements ImagerView
             return true;
         }
         return false;
+    }
+
+    private void deleteLocationTag(Photo photo) {
+        imageViewerViewModel.photoSetLocation(photo, "");
     }
 
     private void modifyLocationTagDialog(Photo photo) {

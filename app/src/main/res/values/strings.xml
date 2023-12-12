@@ -14,6 +14,7 @@
     <string name="common_back"><![CDATA[<]]></string>
     <string name="common_menu">⋮</string>
     <string name="imageviewr_modifylocationtag">Modify Location Tag</string>
+    <string name="imageviewr_deleteLocationTag">Remove Location Tag</string>
     <string name="imageviewr_addpersontag">Add to Person Tag</string>
     <string name="imageviewr_deletepersontag">Remove from Person Tag</string>
     <string name="imageviewer_detailstoggle">Show/Hide Details</string>
